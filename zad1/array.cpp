@@ -1,9 +1,9 @@
 #include "array.h"
+#include <iostream>
 
 class Array {
     private:
         short dataSize; 
-        int dataQuantity;
         int * arrayStart;
         int arraySize;
 
@@ -13,7 +13,6 @@ class Array {
             dataSize = 4;
             arraySize = size;
             arrayStart = (int*)calloc(size, dataSize);
-            dataQuantity = size;
         }
 
         int valueAt(int index){
@@ -42,8 +41,6 @@ class Array {
             arraySize++;
             arrayStart = (int*)realloc(arrayStart, arraySize);
             int * currentIndexPointer = arrayStart+index;;
-            ///std::cout << currentIndexPointer << std::endl;
-            //std::cout << arrayStart << std::endl;
             int dataBuffor1 = 0;
             int dataBuffor2 = 0;
             dataBuffor1 = *currentIndexPointer;
@@ -55,8 +52,6 @@ class Array {
                 *currentIndexPointer = dataBuffor1;
                 dataBuffor1 = dataBuffor2;
             }
-            //std::cout << currentIndexPointer << std::endl;
-            //std::cout << arrayStart << std::endl;
             currentIndexPointer = nullptr;
             return true;
         }
@@ -64,8 +59,6 @@ class Array {
         bool removeElementAt(int index){
             if (index >= arraySize) return false;
             int * currentIndexPointer = arrayStart+arraySize-1;
-            //std::cout << currentIndexPointer << std::endl; 
-            //std::cout << arrayStart << std::endl;
             int dataBuffor1 = 0;
             int dataBuffor2 = 0;
             dataBuffor1 = *currentIndexPointer;
@@ -75,12 +68,29 @@ class Array {
                 *currentIndexPointer = dataBuffor1;
                 dataBuffor1 = dataBuffor2;
             }
-            //std::cout << currentIndexPointer << std::endl;
-            //std::cout << arrayStart << std::endl;
             currentIndexPointer = nullptr;
             arraySize--;
             arrayStart = (int*)realloc(arrayStart, arraySize * dataSize); //ERROR!
             return true;
+        }
+
+        void displayArray(){
+            int * dataPointer = arrayStart;
+            std::cout << "-------TABLICA--------" << std::endl;
+            for(int i = 0; i < arraySize; i++){
+                std::cout << *dataPointer << std::endl;
+                dataPointer++;
+            }
+            std::cout << std::endl;
+        }
+
+        bool findElement(int value){
+            int * dataPointer = arrayStart;
+            for(int i = 0; i < arraySize; i++){
+                if(*dataPointer == value) return true;
+                dataPointer++;
+            }
+            return false;
         }
 
 };
@@ -90,30 +100,13 @@ int main(){
     newArray.setValueAt(0,2);
     newArray.setValueAt(2,5);
 
-    std::cout << newArray.valueAt(0) << std::endl;
-    std::cout << newArray.valueAt(1) << std::endl;
-    std::cout << newArray.valueAt(2) << std::endl;
-    std::cout << newArray.valueAt(3) << std::endl;
-    std::cout << newArray.valueAt(4) << std::endl << std::endl;
+    newArray.displayArray();
 
     newArray.addElementAt(5,3);
-    std::cout << newArray.valueAt(0) << std::endl;
-    std::cout << newArray.valueAt(1) << std::endl;
-    std::cout << newArray.valueAt(2) << std::endl;
-    std::cout << newArray.valueAt(3) << std::endl;
-    std::cout << newArray.valueAt(4) << std::endl;
-    std::cout << newArray.valueAt(5) << std::endl << std::endl;
-
+    if(newArray.findElement(3)) newArray.displayArray();
     newArray.removeElementAt(5);
 
-    std::cout << newArray.valueAt(0) << std::endl;
-    std::cout << newArray.valueAt(1) << std::endl;
-    std::cout << newArray.valueAt(2) << std::endl;
-    std::cout << newArray.valueAt(3) << std::endl;
-    std::cout << newArray.valueAt(4) << std::endl;
-    std::cout << newArray.valueAt(5) << std::endl << std::endl;
-
-
+    if(newArray.findElement(-2)) newArray.displayArray();
 
     return 0;
 }
