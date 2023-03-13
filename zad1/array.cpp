@@ -94,20 +94,3 @@ class Array {
         }
 
 };
-
-int main(){
-    Array newArray = Array(5);
-    newArray.setValueAt(0,2);
-    newArray.setValueAt(2,5);
-
-    newArray.displayArray();
-
-    newArray.addElementAt(5,3);
-    if(newArray.findElement(3)) newArray.displayArray();
-    newArray.removeElementAt(5);
-
-    if(newArray.findElement(-2)) newArray.displayArray();
-
-    return 0;
-}
-

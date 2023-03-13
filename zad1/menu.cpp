@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "arrayMenu.cpp"
 
 int main()
 {
@@ -11,7 +12,7 @@ int main()
         switch(choice)
         {
             case 1:
-                //TO BE ADDED FUNCTION FOR TABLE OPERATION
+                tableOperations();
                 cout << "Tablica" << endl; 
                 break;
 
@@ -27,15 +28,14 @@ int main()
     return 0;
 }
 
+
 void printMainMenu()
 {
-    cout << "1. Tablica" << endl
-    << "2. Lista" << endl
-    << "0. Wyjdź" << endl
-    << "Wybierz opcję:" << endl;
+    cout << "1. Tablica\n"
+    << "2. Lista\n"
+    << "0. Wyjdź\n" 
+    << "Wybierz opcję:\n";
 }
 
-void printSubMenu(string structureTypeName)
-{
-    //TO BE ADDED THE BASIC MENU FOR ANY STRUCTURE TYPE   
-}
+
+

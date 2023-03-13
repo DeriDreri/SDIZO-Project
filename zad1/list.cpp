@@ -118,26 +118,3 @@ class List{
                 }
         }
 };
-
-int main(){
-
-    List testList = List(5);
-    testList.setValueAt(0,1);
-    testList.setValueAt(1,2);
-    testList.setValueAt(2,3);
-    testList.setValueAt(3,4);
-    testList.setValueAt(4,5);
-    if(testList.findElementOfValue(3)) 
-        testList.displayList();
-    testList.removeElementOfValue(0);
-    testList.removeElementOfValue(3);
-    testList.removeElementOfValue(5);
-    if(testList.findElementOfValue(3))
-        testList.displayList();
-    testList.addAt(0,9);
-    testList.addAt(4,10);
-    if(testList.findElementOfValue(10))
-        testList.displayList();
-
-    return 0;
-};
