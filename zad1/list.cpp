@@ -35,7 +35,7 @@ class List{
             ListElement * currentPointer = head;
             std::cout << "--------LISTA---------\n";
             while(currentPointer -> next != nullptr){
-                std::cout << currentPointer -> value << std::endl;
+                std::cout << currentPointer -> value << " <-> ";
                 currentPointer = currentPointer -> next;
             }
             std::cout << currentPointer -> value << std::endl << std::endl;
@@ -118,3 +118,16 @@ class List{
                 }
         }
 };
+
+int main(){
+
+    List newList = List(1);
+    newList.addAtEnd(2);
+    newList.addAtEnd(2);
+    newList.addAtEnd(2);
+    newList.addAtEnd(2);
+    newList.addAtEnd(2);
+    newList.addAtEnd(3);
+    newList.displayList();
+    return 0;
+}

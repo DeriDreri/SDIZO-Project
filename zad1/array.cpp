@@ -78,7 +78,7 @@ class Array {
             int * dataPointer = arrayStart;
             std::cout << "-------TABLICA--------" << std::endl;
             for(int i = 0; i < arraySize; i++){
-                std::cout << *dataPointer << std::endl;
+                std::cout << "[" << *dataPointer << "] ";
                 dataPointer++;
             }
             std::cout << std::endl;
@@ -94,3 +94,15 @@ class Array {
         }
 
 };
+
+int main(){
+    Array newArray = Array(1);
+    newArray.addElementAt(1,2);
+    newArray.addElementAt(1,2);
+    newArray.addElementAt(1,2);
+    newArray.addElementAt(1,2);
+    newArray.addElementAt(1,2);
+    newArray.displayArray();
+    return 0;
+}
+
