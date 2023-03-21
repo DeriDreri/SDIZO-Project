@@ -22,7 +22,6 @@ void tableOperations(){
     int choice;
     do{
         Array mainArray = Array(1);
-        Array * mainArrayPointer = &mainArray;
         printSubMenu("TABLICA");
         cin >> choice;
 
@@ -31,11 +30,11 @@ void tableOperations(){
                 
                 break;
 
-            case 2:
-                addToArray(mainArrayPointer);
+            case 3:
+                addToArray(&mainArray);
                 break;
 
-            case 3:
+            case 4:
                 break;
             
             case 6:

@@ -37,5 +37,3 @@ void printMainMenu()
     << "Wybierz opcję:\n";
 }
 
-
-
