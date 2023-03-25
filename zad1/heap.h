@@ -1,17 +1,23 @@
 #include <stdio.h>
 #include "array.cpp"
+#include <iostream>
 
 class Heap{
 
-    Array heapArray = Array(100);
+    Array heapArray;
     int heapSize;
+    int heapLimit;
+
+    void fixHeapUp(int index);
+    void fixHeapDown(int index);
+    void heapCreateUp();
+    void heapCreateDown();
 
     public:
         Heap();
+        Heap(int size);
         void display();
         bool removeAt(int index);
         void add(int value);
-        void balanceTree();
         bool findElementOfValue(int value);
-
 };
