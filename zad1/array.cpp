@@ -67,7 +67,7 @@ bool Array::removeElementAt(int index){
     return true;
 }
 
-void Array::displayArray(){
+void Array::display(){
     int* dataPointer = arrayStart;
     for(int i = 0; i < arraySize; i++){
         std::cout << "[" << *dataPointer << "] ";

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "array.cpp"
 #include <iostream>
+#include <cmath>
 
 class Heap{
 
@@ -16,8 +17,9 @@ class Heap{
     public:
         Heap();
         Heap(int size);
-        void display();
+        void display();                             //Prowizoruycznie, do implemenetacji późniejszej
         bool removeAt(int index);
+        void removeRoot();
         void add(int value);
         bool findElementOfValue(int value);
 };

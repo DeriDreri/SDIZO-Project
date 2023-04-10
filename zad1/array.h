@@ -36,7 +36,7 @@ class Array{
         bool removeElementAt(int index);
 
         /// @brief Wyświetla zawartość tablicy na standardowym wyjściu. Elementy tablicy wydzielone są przez nawiasy kwadratowe - []
-        void displayArray();
+        void display();
 
         /// @brief Sprawdza, czy element o podanej wartości występuje w tablicy
         /// @param value Wartość szukanego elementu
