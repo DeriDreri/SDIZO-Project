@@ -42,4 +42,6 @@ class Array{
         /// @param value Wartość szukanego elementu
         /// @return Potwierdzenie bądź przeczenie znalezienia elementu
         bool findElement(int value);
+
+        int getSize();
 };

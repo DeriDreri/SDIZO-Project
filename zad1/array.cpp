@@ -25,7 +25,7 @@ bool Array::addElementAt(int index, int value){
     if(index > arraySize || index < 0) return false;
 
     arraySize++;
-    arrayStart = (int*)realloc(arrayStart, arraySize);      // Zwiększa rozmiar tablicy o 1 i przenosi dane w nowe miesjce pamięci, rezerwując dodatkowe 4 bajty
+    arrayStart = (int*)realloc(arrayStart, arraySize * 4);      // Zwiększa rozmiar tablicy o 1 i przenosi dane w nowe miesjce pamięci, rezerwując dodatkowe 4 bajty
     
     int* currentIndexPointer = arrayStart+index;;          // Przenosi wskaźnik na pozycję indeksu
 
@@ -83,4 +83,8 @@ bool Array::findElement(int value){
         dataPointer++;
     }
     return false;
+}
+
+int Array::getSize(){
+    return arraySize;
 }

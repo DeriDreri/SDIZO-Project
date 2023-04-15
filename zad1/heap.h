@@ -11,15 +11,15 @@ class Heap{
 
     void fixHeapUp(int index);
     void fixHeapDown(int index);
-    void heapCreateUp();
-    void heapCreateDown();
+    void heapCreateDown();                         //Algorytm Floyda
+
 
     public:
         Heap();
         Heap(int size);
-        void display();                             //Prowizoruycznie, do implemenetacji późniejszej
+        Heap(Array array);
+        void display();                            //Prowizorycznie, do implemenetacji późniejszej
         bool removeAt(int index);
-        void removeRoot();
         void add(int value);
-        bool findElementOfValue(int value);
+        bool findElementOfValue(int value, int index);
 };
