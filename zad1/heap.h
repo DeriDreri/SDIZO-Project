@@ -12,6 +12,7 @@ class Heap{
     void fixHeapUp(int index);
     void fixHeapDown(int index);
     void heapCreateDown();                         //Algorytm Floyda
+    void printNode(int depth, int parentIndex);
 
 
     public:
