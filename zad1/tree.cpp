@@ -41,7 +41,15 @@ bool Tree::searchValue(int value){
     return false;
 }
 
-TreeNode* Tree::findMinumumKey(TreeNode* node){
+TreeNode* Tree::findMinimumKey(){
+    return findMinimumKey(root);
+}
+
+TreeNode* Tree::findMaximumKey(){
+    return findMaximumKey(root);
+}
+
+TreeNode* Tree::findMinimumKey(TreeNode* node){
     while (node -> left != nullptr)
         node = node -> left;
     return node;
@@ -50,9 +58,30 @@ TreeNode* Tree::findMinumumKey(TreeNode* node){
 TreeNode* Tree::findMaximumKey(TreeNode* node){
     while (node -> right != nullptr)
         node = node -> right;
-    return node
+    return node;
 }
 
+TreeNode* Tree::findSuccessor(TreeNode * node){
+    if(node -> right != nullptr)
+        return findMinimumKey(node -> right);
+    TreeNode* parentNode = node -> parent;
+    while(parentNode != nullptr && parentNode -> left != node){
+        node = parentNode;
+        parentNode = parentNode -> parent;
+    }
+    return parentNode;
+}
+
+TreeNode* Tree::findPredecessor(TreeNode* node){
+    if(node -> left != nullptr)
+        return findMaximumKey(node -> left);
+    TreeNode* parentNode = node -> parent;  
+    while(parentNode != nullptr && parentNode -> right != node){
+        node = parentNode;
+        parentNode = parentNode -> parent;
+    }
+    return parentNode;
+}
 
 void Tree::printNode(TreeNode* node, int depth){
     for(int i = 0; i < depth; i++){
@@ -97,5 +126,7 @@ int main(){
     testTree.addNode(8);
     testTree.addNode(13);
     testTree.display();
+    std::cout << testTree.findSuccessor(testTree.findMinimumKey()) -> key << std::endl;
+    std::cout << testTree.findPredecessor(testTree.findMaximumKey()) -> key << std::endl;
     return 0;
 }

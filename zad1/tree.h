@@ -20,7 +20,9 @@ class Tree{
         void display();
         void printNode(TreeNode * node, int depth);
         bool searchValue(int value);
-        TreeNode* findMinumumKey(TreeNode* node);
+        TreeNode* findMinimumKey();
+        TreeNode* findMaximumKey();
+        TreeNode* findMinimumKey(TreeNode* node);
         TreeNode* findMaximumKey(TreeNode* node);
         TreeNode* findSuccessor(TreeNode * node);
         TreeNode* findPredecessor(TreeNode* node);
