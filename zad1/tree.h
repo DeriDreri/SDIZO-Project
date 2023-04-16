@@ -19,7 +19,7 @@ class Tree{
         void addNode(int value);
         void display();
         void printNode(TreeNode * node, int depth);
-        bool searchValue(int value);
+        TreeNode* searchValue(int value);
         TreeNode* findMinimumKey();
         TreeNode* findMaximumKey();
         TreeNode* findMinimumKey(TreeNode* node);
