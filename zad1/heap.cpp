@@ -140,9 +140,6 @@ bool Heap::findElementOfValue(int value, int index){
     return toReturn;
 }
 
-
-
-
 int main(){
     Array heapArray = Array(0);
     heapArray.addElementAt(0,20);       
