@@ -45,6 +45,12 @@ class List{
         /// @return Potwierdzenie bądź zaprzeczenie poprawnej modyfikacji elementu
         bool setValueAt(int index, int value);
 
+
+        void removeStart();
+
+        void removeEnd();
+
+        bool removeAt(int index);
         /// @brief Usuwa pierwszy element o podanej wartości jeśli występuje w liście
         /// @param valueToRemove Wartość elementu to usunięcia
         /// @return Potwierdzenie bądź zaprzeczenie poprawnego usunięcia elementu

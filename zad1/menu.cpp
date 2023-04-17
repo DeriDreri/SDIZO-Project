@@ -5,6 +5,10 @@ Array array[100];
 List list[100];
 Heap heap[100];
 Tree tree[100];
+unsigned int minimalValue;
+unsigned int maximumValue;
+unsigned int steps;
+unsigned int number;
 
 int main()
 {
@@ -39,6 +43,20 @@ int main()
     return 0;
 }
 
+void gatherMeasurmentInput(){
+    std::cout << "Wybierz początkową ilość elementów w strukturze: ";
+    std::cin >> minimalValue;
+    std::cout << "Wybierz końcową ilość elementów w strukturze: ";
+    std::cin >> maximumValue;
+    std::cout << "Wybierz ilość pomiarów (max 100): ";
+    std::cin >> steps;
+    if (steps > 100)
+        steps = 100;
+    std::cout << "Wybierz ilość operacji równloległych: (max 100): ";
+    std::cin >> number;
+    if (steps > 100)
+        steps = 100;
+}
 
 void printMainMenu()
 {
@@ -100,22 +118,7 @@ void arrayOperations(){
                     if(subChoice == 'y')      
                         arrayAdd(5000, 1000000, 10, 15);
                     else{
-                        unsigned int minimalValue;
-                        unsigned int maximumValue;
-                        unsigned int steps;
-                        unsigned int number;
-                        std::cout << "Wybierz początkową ilość elementów w strukturze: ";
-                        std::cin >> minimalValue;
-                        std::cout << "Wybierz końcową ilość elementów w strukturze: ";
-                        std::cin >> maximumValue;
-                        std::cout << "Wybierz ilość pomiarów (max 100): ";
-                        std::cin >> steps;
-                        if (steps > 100)
-                            steps = 100;
-                        std::cout << "Wybierz ilość operacji równloległych: (max 100): ";
-                        std::cin >> number;
-                        if (steps > 100)
-                            steps = 100;
+                        gatherMeasurmentInput();
                         arrayAdd(minimalValue,maximumValue,steps,number);
                     }
                     
@@ -129,22 +132,7 @@ void arrayOperations(){
                     if(subChoice == 'y')      
                         arrayRemove(5000, 1000000, 10, 15);
                     else{
-                        unsigned int minimalValue;
-                        unsigned int maximumValue;
-                        unsigned int steps;
-                        unsigned int number;
-                        std::cout << "Wybierz początkową ilość elementów w strukturze: ";
-                        std::cin >> minimalValue;
-                        std::cout << "Wybierz końcową ilość elementów w strukturze: ";
-                        std::cin >> maximumValue;
-                        std::cout << "Wybierz ilość pomiarów (max 100): ";
-                        std::cin >> steps;
-                        if (steps > 100)
-                            steps = 100;
-                        std::cout << "Wybierz ilość operacji równloległych: (max 100): ";
-                        std::cin >> number;
-                        if (steps > 100)
-                            steps = 100;
+                        gatherMeasurmentInput();
                         arrayRemove(minimalValue,maximumValue,steps,number);
                     }
                     
@@ -158,22 +146,7 @@ void arrayOperations(){
                     if(subChoice == 'y')      
                         arraySearch(5000, 1000000, 10, 15);
                     else{
-                        unsigned int minimalValue;
-                        unsigned int maximumValue;
-                        unsigned int steps;
-                        unsigned int number;
-                        std::cout << "Wybierz początkową ilość elementów w strukturze: ";
-                        std::cin >> minimalValue;
-                        std::cout << "Wybierz końcową ilość elementów w strukturze: ";
-                        std::cin >> maximumValue;
-                        std::cout << "Wybierz ilość pomiarów (max 100): ";
-                        std::cin >> steps;
-                        if (steps > 100)
-                            steps = 100;
-                        std::cout << "Wybierz ilość operacji równloległych: (max 100): ";
-                        std::cin >> number;
-                        if (steps > 100)
-                            steps = 100;
+                        gatherMeasurmentInput();
                         arraySearch(minimalValue,maximumValue,steps,number);
                     }
                     
@@ -196,21 +169,66 @@ void listOperations(){
 
         switch(choice){
             case 1:
-                std::cout << "Wczytywanie";
+                listLoad();
                 break;
             case 2: 
-                std::cout << "Wyświetlanie";
+                list[0].displayList();
                 break;
             case 3:
-                std::cout << "Dodawanie";
+                listAddTest();
                 break;
             case 4:
-                std::cout << "Usuwanie";
+                listRemoveTest();
                 break;
             case 5:
-                std::cout << "Szukanie";
+                listSearchTest();
                 break;
-            
+            case 6:
+                listGenerate(0, 20);
+                list[0].displayList();
+                break;
+            case 7:
+                {
+                    char subChoice;
+                    std::cout << "Czy chcesz użyć domyślnych wartości pomiarowych? [y/n]: ";
+                    std::cin >> subChoice;
+                    std::cout << std::endl;
+                    if(subChoice == 'y')      
+                        listAdd(5000, 1000000, 10, 10);
+                    else{
+                        gatherMeasurmentInput();
+                        listAdd(minimalValue,maximumValue,steps,number);
+                    }
+                    
+                }break;
+            case 8:
+               {
+                    char subChoice;
+                    std::cout << "Czy chcesz użyć domyślnych wartości pomiarowych? [y/n]: ";
+                    std::cin >> subChoice;
+                    std::cout << std::endl;
+                    if(subChoice == 'y')      
+                        listRemove(5000, 1000000, 10, 10);
+                    else{
+                        gatherMeasurmentInput();
+                        listRemove(minimalValue,maximumValue,steps,number);
+                    }
+                    
+                }break;
+            case 9:
+                {
+                    char subChoice;
+                    std::cout << "Czy chcesz użyć domyślnych wartości pomiarowych? [y/n]: ";
+                    std::cin >> subChoice;
+                    std::cout << std::endl;
+                    if(subChoice == 'y')      
+                        listSearch(5000, 1000000, 10, 10);
+                    else{
+                        gatherMeasurmentInput();
+                        listSearch(minimalValue,maximumValue,steps,number);
+                    }
+                    
+                }break;
             default:
                 break;           
         }
@@ -229,20 +247,66 @@ void heapOperations(){
 
         switch(choice){
             case 1:
-                std::cout << "Wczytywanie";
+                heapLoad();
                 break;
             case 2: 
-                std::cout << "Wyświetlanie";
+                heap[0].displayTree();
                 break;
             case 3:
-                std::cout << "Dodawanie";
+                heapAddTest();
                 break;
             case 4:
-                std::cout << "Usuwanie";
+                heapRemoveTest();
                 break;
             case 5:
-                std::cout << "Szukanie";
+                heapSearchTest();
                 break;
+            case 6:
+                heapGenerate(0, 20, 100);
+                heap[0].displayTree();
+                break;
+            case 7:
+                {
+                    char subChoice;
+                    std::cout << "Czy chcesz użyć domyślnych wartości pomiarowych? [y/n]: ";
+                    std::cin >> subChoice;
+                    std::cout << std::endl;
+                    if(subChoice == 'y')      
+                        heapAdd(5000, 10000000, 10, 1);
+                    else{
+                        gatherMeasurmentInput();
+                        heapAdd(minimalValue,maximumValue,steps,number);
+                    }
+                    
+                }break;
+            case 8:
+               {
+                    char subChoice;
+                    std::cout << "Czy chcesz użyć domyślnych wartości pomiarowych? [y/n]: ";
+                    std::cin >> subChoice;
+                    std::cout << std::endl;
+                    if(subChoice == 'y')      
+                        heapRemove(5000, 10000000, 10, 1);
+                    else{
+                        gatherMeasurmentInput();
+                        heapRemove(minimalValue,maximumValue,steps,number);
+                    }
+                    
+                }break;
+            case 9:
+                {
+                    char subChoice;
+                    std::cout << "Czy chcesz użyć domyślnych wartości pomiarowych? [y/n]: ";
+                    std::cin >> subChoice;
+                    std::cout << std::endl;
+                    if(subChoice == 'y')      
+                        heapSearch(5000, 100000, 10, 10);
+                    else{
+                        gatherMeasurmentInput();
+                        heapSearch(minimalValue,maximumValue,steps,number);
+                    }
+                    
+                }break;
             default:
                 break;           
         }
@@ -346,7 +410,7 @@ void arrayGenerate(int arrayIndex, int arraySize){
     array[arrayIndex] = Array(0);
     int value;
     for (int i = 0; i < arraySize; i++){
-        value = rand() % 10000;
+        value = rand() % 1000000;
         array[arrayIndex].addElementAt(i, value);
     }
 }
@@ -366,9 +430,6 @@ void arrayAdd(int minimalElements, int maximumElements, int measurments, int arr
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber<< "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].removeElementAt(currentElements);
-        }
         currentElements += step;
     }
 
@@ -385,9 +446,6 @@ void arrayAdd(int minimalElements, int maximumElements, int measurments, int arr
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber << "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].removeElementAt(currentElements);
-        }
         currentElements += step;
     }
 
@@ -403,9 +461,6 @@ void arrayAdd(int minimalElements, int maximumElements, int measurments, int arr
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber << "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].removeElementAt(currentElements);
-        }
         currentElements += step;
     }
 }
@@ -425,9 +480,6 @@ void arrayRemove(int minimalElements, int maximumElements, int measurments, int 
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber<< "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].addElementAt(currentElements-2, rand()%10000);
-        }
         currentElements += step;
     }
 
@@ -443,9 +495,6 @@ void arrayRemove(int minimalElements, int maximumElements, int measurments, int 
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber<< "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].addElementAt(currentElements-1, rand()%10000);
-        }
         currentElements += step;
     }
 
@@ -460,9 +509,6 @@ void arrayRemove(int minimalElements, int maximumElements, int measurments, int 
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber << "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].addElementAt(currentElements-1, rand()%10000);
-        }
         currentElements += step;
     }
 }
@@ -471,7 +517,7 @@ void arraySearch(int minimalElements, int maximumElements, int measurments, int 
     int step = (maximumElements - minimalElements) / (measurments);
     int currentElements = minimalElements;
 
-    std::cout << "----Szukanie losowego elementu w tabilicy---\n";
+    std::cout << "----Szukanie losowego elementu w tablicy---\n";
     while(currentElements <= maximumElements){
         for(int i = 0; i < arrayNumber; i++)
             arrayGenerate(i,currentElements);
@@ -488,8 +534,11 @@ void arraySearch(int minimalElements, int maximumElements, int measurments, int 
 
 void listLoad(){
     list[0] = List(0);
+    string filename;
     std::ifstream listFile;
-    listFile.open("data/tab1.txt");
+    std::cout << "Podaj ścieżkę pliku: ";
+    std::cin >> filename;
+    listFile.open(filename);
     string sValue;
     int value;
     while(listFile){
@@ -527,10 +576,10 @@ void listRemoveTest(){
     std::cin >> value;
     if(list[0].removeElementOfValue(value)){
         std::cout << std::endl << "Poprawnie usunięto!" << std::endl;
-        array[0].display();
+        list[0].displayList();
     }
     else
-        std::cout << std::endl << "Niepoprawny indeks!" << std::endl;
+        std::cout << std::endl << "Brak wartości!" << std::endl;
 }
 
 void listSearchTest(){
@@ -538,9 +587,9 @@ void listSearchTest(){
     std::cout << "Podaj szukaną wartość: ";
     std::cin >> value;
     if(list[0].findElementOfValue(value))
-        std::cout << "Element obecny w tablicy";
+        std::cout << "Element obecny w liście";
     else
-        std::cout << "Brak elementu w tablicy";
+        std::cout << "Brak elementu w liście";
 };
 
 void listGenerate(int listIndex, int listSize){
@@ -548,141 +597,248 @@ void listGenerate(int listIndex, int listSize){
     int value;
     for (int i = 0; i < listSize; i++){
         value = rand() % 10000;
-        list[listIndex].addAtEnd(value);
+        list[listIndex].addAtStart(value);
     }
 }
 
-void arrayAdd(int minimalElements, int maximumElements, int measurments, int arrayNumber){
+void listAdd(int minimalElements, int maximumElements, int measurments, int listNumber){
     int step = (maximumElements - minimalElements) / (measurments);
     int currentElements = minimalElements;
 
-    std::cout << "----Dodawanie na początku tablicy----\n";
+    std::cout << "----Dodawanie na początku list----\n";
     while(currentElements <= maximumElements){
-        for(int i = 0; i < arrayNumber; i++)
-            arrayGenerate(i,currentElements);
+        for(int i = 0; i < listNumber; i++)
+            listGenerate(i,currentElements);
         int elementToAdd = rand()%100000;
         auto begin = std::chrono::high_resolution_clock::now();
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].addElementAt(0, elementToAdd);
+        for(int i = 0; i < listNumber; i++){
+            list[i].addAtStart(elementToAdd);
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber<< "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].removeElementAt(currentElements);
-        }
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / listNumber << "ns" << std::endl;
         currentElements += step;
     }
 
-    std::cout << "----Dodawanie w losowym miejscu tablicy----\n";
+    std::cout << "----Dodawanie w losowym miejscu listy----\n";
     currentElements = minimalElements;
     while(currentElements <= maximumElements){
-        for(int i = 0; i < arrayNumber; i++)
-            arrayGenerate(i,currentElements);
+        for(int i = 0; i < listNumber; i++)
+            listGenerate(i,currentElements);
         int elementToAdd = rand()%100000;
         int indexToAdd = rand()%currentElements;
         auto begin = std::chrono::high_resolution_clock::now();
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].addElementAt(indexToAdd, elementToAdd);
+        for(int i = 0; i < listNumber; i++){
+            list[i].addAt(indexToAdd, elementToAdd);
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber << "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].removeElementAt(currentElements);
-        }
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / listNumber << "ns" << std::endl;
         currentElements += step;
     }
 
-    std::cout << "----Dodawanie na końcu tablicy----\n";
+    std::cout << "----Dodawanie na końcu listy----\n";
     currentElements = minimalElements;
     while(currentElements <= maximumElements){
-        for(int i = 0; i < arrayNumber; i++)
-            arrayGenerate(i,currentElements);
+        for(int i = 0; i < listNumber; i++)
+            listGenerate(i,currentElements);
         int elementToAdd = rand()%100000;
         auto begin = std::chrono::high_resolution_clock::now();
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].addElementAt(currentElements-1, elementToAdd);
+        for(int i = 0; i < listNumber; i++){
+            list[i].addAtEnd(elementToAdd);
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber << "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].removeElementAt(currentElements);
-        }
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / listNumber << "ns" << std::endl;
         currentElements += step;
     }
 }
 
-void arrayRemove(int minimalElements, int maximumElements, int measurments, int arrayNumber){
+void listRemove(int minimalElements, int maximumElements, int measurments, int listNumber){
 
     int step = (maximumElements - minimalElements) / (measurments);
     int currentElements = minimalElements;
 
-    std::cout << "----Usuwanie z początku tablicy----\n";
+    std::cout << "----Usuwanie z początku listy---\n";
     while(currentElements <= maximumElements){
-        for(int i = 0; i < arrayNumber; i++)
-            arrayGenerate(i,currentElements);
+        for(int i = 0; i < listNumber; i++)
+            listGenerate(i,currentElements);
         auto begin = std::chrono::high_resolution_clock::now();
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].removeElementAt(0);
+        for(int i = 0; i < listNumber; i++){
+            list[i].removeStart();
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber<< "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].addElementAt(currentElements-2, rand()%10000);
-        }
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / listNumber<< "ns" << std::endl;
         currentElements += step;
     }
 
-    std::cout << "----Usuwanie losowego elementu tablicy----\n";
+    std::cout << "----Usuwanie losowego elementu listy----\n";
     currentElements = minimalElements;
     while(currentElements <= maximumElements){
-        for(int i = 0; i < arrayNumber; i++)
-            arrayGenerate(i,currentElements);
+        for(int i = 0; i < listNumber; i++)
+            listGenerate(i,currentElements);
         int toRemove = rand()%currentElements;
         auto begin = std::chrono::high_resolution_clock::now();
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].removeElementAt(toRemove);
+        for(int i = 0; i < listNumber; i++){
+            list[i].removeAt(toRemove);
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber<< "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].addElementAt(currentElements-1, rand()%10000);
-        }
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / listNumber<< "ns" << std::endl;
+
         currentElements += step;
     }
 
-    std::cout << "----Usuwanie z końca tablicy----\n";
+    std::cout << "----Usuwanie z końca listy----\n";
     currentElements = minimalElements;
     while(currentElements <= maximumElements){
-        for(int i = 0; i < arrayNumber; i++)
-            arrayGenerate(i,currentElements);
+        for(int i = 0; i < listNumber; i++)
+            listGenerate(i,currentElements);
         auto begin = std::chrono::high_resolution_clock::now();
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].removeElementAt(currentElements-1);
+        for(int i = 0; i < listNumber; i++){
+            list[i].removeEnd();
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber << "ns" << std::endl;
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].addElementAt(currentElements-1, rand()%10000);
-        }
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / listNumber << "ns" << std::endl;
         currentElements += step;
     }
 }
 
-void arraySearch(int minimalElements, int maximumElements, int measurments, int arrayNumber){
+void listSearch(int minimalElements, int maximumElements, int measurments, int listNumber){
     int step = (maximumElements - minimalElements) / (measurments);
     int currentElements = minimalElements;
 
-    std::cout << "----Szukanie losowego elementu w tabilicy---\n";
+    std::cout << "----Szukanie losowego elementu w liście--\n";
     while(currentElements <= maximumElements){
-        for(int i = 0; i < arrayNumber; i++)
-            arrayGenerate(i,currentElements);
+        for(int i = 0; i < listNumber; i++)
+            listGenerate(i,currentElements);
         int elementToFind = rand()%100000;
         auto begin = std::chrono::high_resolution_clock::now();
-        for(int i = 0; i < arrayNumber; i++){
-            array[i].findElement(elementToFind);
+        for(int i = 0; i < listNumber; i++){
+            list[i].findElementOfValue(elementToFind);
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / arrayNumber << "ns" << std::endl;
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / listNumber << "ns" << std::endl;
         currentElements += step;
     }
+}
+
+
+void heapLoad(){
+    heap[0] = Heap(100);
+    string filename;
+    std::ifstream heapFile;
+    std::cout << "Podaj ścieżkę pliku: ";
+    std::cin >> filename;
+    heapFile.open(filename);
+    string sValue;
+    int value;
+    while(heapFile){
+        std::getline(heapFile, sValue);
+        try{
+            value = std::stoi(sValue);
+        }
+        catch(std::invalid_argument){
+            break;
+        }
+        heap[0].add(value);
+    }
+    heapFile.close();
+    heap[0].displayTree();
+}
+
+void heapAddTest(){
+    int index;
+    int value;
+    std::cout << std::endl << "Podaj wartość: ";
+    std::cin >> value;
+    heap[0].add(value);
+    std::cout << std::endl << "Poprawnie dodano!" << std::endl;
+    heap[0].displayTree();
+}
+
+void heapRemoveTest(){
+    int index;
+    std::cout << "Podaj indeks: ";
+    std::cin >> index;
+    if(heap[0].removeAt(index)){
+        std::cout << std::endl << "Poprawnie usunięto!" << std::endl;
+        heap[0].displayTree();
+    }
+    else
+        std::cout << std::endl << "Błędny indeks!" << std::endl;
+}
+
+void heapSearchTest(){
+    int value;
+    std::cout << "Podaj szukaną wartość: ";
+    std::cin >> value;
+    if(heap[0].findElementOfValue(value, 0))
+        std::cout << "Element obecny w kopcu";
+    else
+        std::cout << "Brak elementu w kopcu";
 };
+
+void heapGenerate(int listIndex, int heapSize, int heapMax){
+    heap[listIndex] = Heap(heapMax);
+    int value;
+    for (int i = 0; i < heapSize; i++){
+        value = rand() % 10000000;
+        heap[listIndex].add(value);
+    }
+}
+
+void heapAdd(int minimalElements, int maximumElements, int measurments, int heapNumber){
+    int step = (maximumElements - minimalElements) / (measurments);
+    int currentElements = minimalElements;
+
+    std::cout << "----Dodawanie w kopcu----\n";
+    while(currentElements <= maximumElements){
+        for(int i = 0; i < heapNumber; i++)
+            heapGenerate(i,currentElements, currentElements+1);
+        int elementToAdd = rand()%100000;
+        auto begin = std::chrono::high_resolution_clock::now();
+        for(int i = 0; i < heapNumber; i++){
+            heap[i].add(elementToAdd);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / heapNumber << "ns" << std::endl;
+        currentElements += step;
+    }
+
+    
+}
+
+void heapRemove(int minimalElements, int maximumElements, int measurments, int heapNumber){
+
+    int step = (maximumElements - minimalElements) / (measurments);
+    int currentElements = minimalElements;
+
+    std::cout << "----Usuwanie korzenia kopca--\n";
+    while(currentElements <= maximumElements){
+        for(int i = 0; i < heapNumber; i++)
+            heapGenerate(i,currentElements, currentElements);
+        auto begin = std::chrono::high_resolution_clock::now();
+        for(int i = 0; i < heapNumber; i++){
+            heap[i].removeAt(0);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / heapNumber<< "ns" << std::endl;
+        currentElements += step;
+    }
+}
+
+void heapSearch(int minimalElements, int maximumElements, int measurments, int heapNumber){
+    int step = (maximumElements - minimalElements) / (measurments);
+    int currentElements = minimalElements;
+
+    std::cout << "----Szukanie w kopcu---\n";
+    while(currentElements <= maximumElements){
+        for(int i = 0; i < heapNumber; i++)
+            heapGenerate(i,currentElements, currentElements);
+        int elementToFind = rand()%10000000;
+        auto begin = std::chrono::high_resolution_clock::now();
+        for(int i = 0; i < heapNumber; i++){
+            heap[i].findElementOfValue(elementToFind, 0);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / heapNumber << "ns" << std::endl;
+        currentElements += step;
+    }
+}

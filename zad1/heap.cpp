@@ -80,8 +80,9 @@ void Heap::fixHeapDown(int parentIndex){
 
 void Heap::add(int value){
     heapArray.setValueAt(heapSize, value);
-    fixHeapUp(heapSize);
     heapSize++;    
+    fixHeapUp(heapSize-1);
+  
 }
 
 bool Heap::removeAt(int index){

@@ -24,6 +24,7 @@ List::List(int size){
 
 void List::displayList(){
     ListElement* currentPointer = head;
+    if(currentPointer == nullptr) return;
     while(currentPointer -> next != nullptr){                           
         std::cout << currentPointer -> value << " <-> ";
         currentPointer = currentPointer -> next;
@@ -78,6 +79,33 @@ bool List::setValueAt(int index, int value){
     return true;
 }
 
+void List::removeStart(){
+    ListElement* currentPointer = head;
+    head -> next -> prev = nullptr;
+        head = head -> next;
+        free(currentPointer);
+}
+
+void List::removeEnd(){
+    ListElement* currentPointer = tail;
+    tail -> prev -> next = nullptr;
+        tail = tail -> prev;
+        free(currentPointer);
+
+}
+
+bool List::removeAt(int index){
+    ListElement* currentPointer = head;
+    while(index > 0){
+        currentPointer = currentPointer -> next;
+        if(currentPointer == nullptr)
+            return false;
+    }
+    currentPointer -> next -> prev = currentPointer -> prev;      
+    currentPointer -> prev -> next = currentPointer -> next;
+    free(currentPointer);
+    return true;
+}
 bool List::removeElementOfValue(int valueToRemove){
 
     ListElement* currentPointer = findElementOfValue(valueToRemove);
