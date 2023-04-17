@@ -24,13 +24,21 @@ void Tree::addNode(int value){
     
     nodeToInsert -> parent = parent;
 
-    if (parent == nullptr)                              //Przypadek pustego drzewa
+    if (parent == nullptr){                              //Przypadek pustego drzewa
         root = nodeToInsert;
+    }
     else{
         if (nodeToInsert -> key < parent -> key)
             parent -> left = nodeToInsert;
         else   
             parent -> right = nodeToInsert;
+
+        //Przebalansowanie drzewa od wstawionego elementu do korzenia
+    }
+    while(nodeToInsert != nullptr){
+        calculateBalance(nodeToInsert);
+        fixTree(nodeToInsert);
+        nodeToInsert = nodeToInsert -> parent;
     }
 }
 
@@ -92,6 +100,7 @@ bool Tree::deleteNodeOfValue(int value){
     TreeNode* nodeToDelete = searchValue(value);
     TreeNode* nodeToReplace = nullptr;
     TreeNode* childNode = nullptr;
+    TreeNode* parentNode = nullptr;
     if(nodeToDelete == nullptr) return false;                                       //Brak węzła o podanej wartości
     
     if(nodeToDelete -> left == nullptr || nodeToDelete -> right == nullptr)         //W przypadku braku dwóch potomków, rozpatrujemy prostszy przypadek
@@ -104,6 +113,7 @@ bool Tree::deleteNodeOfValue(int value){
         childNode = nodeToReplace -> right;
     if(childNode != nullptr)                                                        //Jeśli następnik lub nasz węzeł mają potomka, to zastępujemy nasz 
         childNode -> parent = nodeToReplace -> parent;                              //węzeł potomkiem lub następnikiem
+    parentNode = nodeToReplace -> parent;
     if(nodeToReplace -> parent == nullptr)                                          //Jeśli usuwany węzeł jest korzeniem, musimy ustawić nowy korzeń
         root = nodeToReplace;
     else
@@ -114,6 +124,15 @@ bool Tree::deleteNodeOfValue(int value){
     if(nodeToReplace != nodeToDelete)
         nodeToDelete -> key = nodeToReplace -> key;
     
+    free(nodeToReplace);
+
+    //Przebalansowanie drzewa od wstawionego elementu do korzenia
+    while(parentNode != nullptr){
+        calculateBalance(parentNode);
+        fixTree(parentNode);
+        parentNode = parentNode -> parent;
+    }
+
     return true;
 }
 
@@ -129,7 +148,7 @@ void Tree::printNode(TreeNode* node, int depth){
             else
                 std::cout << "│   ";
         }
-        std::cout << node -> key << std::endl;
+        std::cout << node -> key << ":" << node -> balance << std::endl;
         if(node -> left != nullptr)
             printNode(node -> left, depth+1);
         if(node -> right != nullptr) 
@@ -139,7 +158,23 @@ void Tree::printNode(TreeNode* node, int depth){
 void Tree::rotateRight(TreeNode* node){
     TreeNode* rotated = node -> left;
     if(rotated == nullptr) return;                           //Rotacja niemożliwa
-    node -> left = rotated -> right;                         //Podpięcie prawego drzewa obracanego pod lewego potomka wzgledem obracanego
+
+    node -> left = rotated -> left;
+    if(rotated -> left != nullptr)
+        rotated -> left -> parent = node;
+    rotated -> left = rotated -> right;
+
+    rotated -> right = node -> right;
+    if(node -> right != nullptr)
+        node -> right -> parent = rotated;
+
+    node -> right = rotated;
+
+    int keyBuff = rotated -> key;
+    rotated -> key = node -> key;
+    node -> key = keyBuff;
+
+    /*node -> left = rotated -> right;                         //Podpięcie prawego drzewa obracanego pod lewego potomka wzgledem obracanego
     node -> left -> parent = node;                           //Zmiana rodzica prawego drzewa
     rotated -> parent = node -> parent;                       //Podpięcie obracanego do rodzica
 
@@ -149,13 +184,29 @@ void Tree::rotateRight(TreeNode* node){
         node -> parent -> left = rotated;
 
     rotated -> right = node;                                 //UStawienie obracanego jako rodzica węzła
-    node -> parent = rotated;
+    node -> parent = rotated;*/
 
 }
 void Tree::rotateLeft(TreeNode* node){
-TreeNode* rotated = node -> right;
+    TreeNode* rotated = node -> right;
     if(rotated == nullptr) return;                           //Rotacja niemożliwa
-    node -> right = rotated -> left;                         //Podpięcie prawego drzewa obracanego pod lewego potomka wzgledem obracanego
+
+    node -> right = rotated -> right;
+    if(rotated->right != nullptr)
+        rotated -> right -> parent = node;
+
+    rotated -> right = rotated -> left;
+    rotated -> left = node -> left;
+    if(node -> left != nullptr)
+        node -> left -> parent = rotated;
+
+    node -> left = rotated;
+
+    int keyBuff = rotated -> key;
+    rotated -> key = node -> key;
+    node -> key = keyBuff;
+
+    /*node -> right = rotated -> left;                         //Podpięcie prawego drzewa obracanego pod lewego potomka wzgledem obracanego
     node -> right -> parent = node;                           //Zmiana rodzica prawego drzewa
     rotated -> parent = node -> parent;                       //Podpięcie obracanego do rodzica
 
@@ -164,13 +215,65 @@ TreeNode* rotated = node -> right;
     else   
         node -> parent -> left = rotated;
 
-    rotated -> left = node;                                 //UStawienie obracanego jako rodzica węzła
-    node -> parent = rotated;
+    rotated -> left = node;                                 //Ustawienie obracanego jako rodzica węzła
+    node -> parent = rotated;*/
 }
+
+short Tree::calculateNodeLength(TreeNode* node){            //Zliczanie długości gałęzi
+    short leftLength = 0;
+    short rightLength = 0;
+    if (node -> left != nullptr)
+        leftLength = calculateNodeLength(node -> left);
+    if (node -> right != nullptr)
+        rightLength = calculateNodeLength(node -> right);
+    leftLength++;
+    rightLength++;
+    return std::max(leftLength, rightLength);
+
+}
+void Tree::calculateBalance(TreeNode* node){
+
+    short leftLength = 0;
+    short rightLength = 0;
+    if (node -> left != nullptr)
+        leftLength = calculateNodeLength(node -> left);
+    if (node -> right != nullptr)
+        rightLength = calculateNodeLength(node -> right);
+    node -> balance = leftLength - rightLength;
+}
+
+void Tree::fixTree(TreeNode* node){
+    if(node -> balance >= 2){
+        if(node -> left -> left != nullptr)
+            rotateRight(node);
+        else{
+            rotateLeft(node -> left);
+            rotateRight(node);
+        }
+    }
+    else if(node -> balance <= -2){
+        if(node -> right -> right != nullptr)
+            rotateLeft(node);
+        else{
+            rotateRight(node->right);
+            rotateLeft(node);
+        }
+    }
+    else 
+        return;
+    calculateBalance(node);
+    if(node -> left != nullptr)
+        calculateBalance(node -> left);
+    if(node -> right != nullptr)
+        calculateBalance(node -> right);
+}
+
 
 void Tree::display(){
     printNode(root, 0);
+    std::cout << std::endl;
 }
+
 
 
 TreeNode::TreeNode(int value){
@@ -188,12 +291,17 @@ int main(){
     testTree.addNode(0);
     testTree.addNode(2);
     testTree.addNode(1);
-    testTree.addNode(4);
-    testTree.addNode(5);
-    testTree.addNode(8);
-    testTree.addNode(13);
     testTree.display();
-    testTree.rotateLeft(testTree.searchValue(0));
+    
+    testTree.addNode(30);
+    testTree.addNode(14);
+    testTree.addNode(52);
+    testTree.addNode(-52);
+    testTree.addNode(23);
+    testTree.addNode(6);
+    testTree.display();
+    testTree.deleteNodeOfValue(20);
+    testTree.deleteNodeOfValue(30);
     testTree.display();
     std::cout << testTree.findSuccessor(testTree.findMinimumKey()) -> key << std::endl;
     std::cout << testTree.findPredecessor(testTree.findMaximumKey()) -> key << std::endl;

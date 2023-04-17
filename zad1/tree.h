@@ -7,6 +7,7 @@ class TreeNode{
     public:
         TreeNode(int value);
         int key;
+        short balance;
         TreeNode* parent;
         TreeNode* left;
         TreeNode* right;
@@ -29,4 +30,8 @@ class Tree{
         bool deleteNodeOfValue(int value);
         void rotateRight(TreeNode* node);
         void rotateLeft(TreeNode* node);
+        short calculateNodeLength(TreeNode* node);
+        void calculateBalance(TreeNode* node);
+        void fixTree(TreeNode* node);
+
 };
