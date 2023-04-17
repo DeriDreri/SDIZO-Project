@@ -19,7 +19,8 @@ class Heap{
         Heap();
         Heap(int size);
         Heap(Array array);
-        void display();                            //Prowizorycznie, do implemenetacji późniejszej
+        void displayTree();                            //Prowizorycznie, do implemenetacji późniejszej
+        void displayArray();
         bool removeAt(int index);
         void add(int value);
         bool findElementOfValue(int value, int index);

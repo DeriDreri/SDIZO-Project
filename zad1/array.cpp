@@ -1,4 +1,6 @@
 #include "array.h"
+#ifndef ARRAY_C 
+#define ARRAY_C 
 
 Array::Array(){
     Array(0);
@@ -88,3 +90,5 @@ bool Array::findElement(int value){
 int Array::getSize(){
     return arraySize;
 }
+
+#endif

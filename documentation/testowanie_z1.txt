@@ -1,0 +1,59 @@
+Tablica: ----------------------------------------------------
+Utworzyć strukturę z danych zawartych w pliku tab1.txt i następnie:
+usunąć indeks 2
+usunąć indeks 3
+usunąć indeks 0
+usunąć indeks 0
+usunąć indeks 0-> tablica  powinna być pusta
+
+dodać: wartość 2, index 0
+dodać: wartość 6, indeks 1
+dodać: wartość 8, indeks 2
+dodać: wartość 4, indeks 1
+dodać: wartość 0, indeks 0
+
+Lista --------------------------------------------------------
+Utworzyć strukturę z danych zawartych w pliku tab1.txt i następnie:
+usunąć wartość 6
+usunąć wartość 10
+usunąć wartość 2
+usunąć wartość 4
+usunąć wartość 8->lista powinna być pusta
+
+dodać: wartość 2, index 0
+dodać: wartość 6, indeks 1
+dodać: wartość 8, indeks 2
+dodać: wartość 4, indeks 1
+dodać: wartość 0, indeks 0
+
+Kopiec ----------------------------------------------------------
+Utworzyć strukturę z danych zawartych w pliku heap1.txt i następnie:
+usunąć 11
+usunąć 1
+usunąć 9
+dodać 11
+dodać 12
+heap2.txt
+
+Utworzyć strukturę z danych zawartych w pliku heap2.txt i następnie:
+usunąć 7
+usunąć 33
+
+Drzewo BST -------------------------------------------
+1.Utworzyć strukturę z danych zawartych w pliku bst1.txt i następnie:
+dodać 10
+dodać 24
+dodać 2
+
+usunąć 7
+
+2. Utworzyć ponownie strukturę z danych zawartych w pliku bst2.txt i następnie:
+zrównoważyć drzewo algorytmem DSW
+
+
+Drzewo czerwono-czarne-------------------------------
+1.Utworzyć strukturę z danych zawartych w pliku bst2.txt i następnie:
+usunąć 15
+
+2.Utworzyć ponownie strukturę z danych zawartych w pliku bst2.txt i następnie:
+dodaj 29 

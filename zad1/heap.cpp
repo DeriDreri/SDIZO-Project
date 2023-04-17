@@ -118,12 +118,17 @@ void Heap::printNode(int depth, int parentIndex){
     
 }
 
-void Heap::display(){
+void Heap::displayTree(){
     
     printNode(0, 0);
-    //std::cout << std::endl << "Heap size: " << heapSize << std::endl;
-    //heapArray.display();
+    std::cout << std::endl;
     
+}
+
+void Heap::displayArray(){
+    for (int i = 0; i < heapSize; i++)
+        std::cout << "[" << heapArray.valueAt(i) << "]";
+    std::cout << std::endl;
 }
 
 bool Heap::findElementOfValue(int value, int index){
@@ -138,22 +143,4 @@ bool Heap::findElementOfValue(int value, int index){
         return toReturn;
     toReturn = findElementOfValue(value, 2*index+2);        //Sprawdź prawą gałąź
     return toReturn;
-}
-
-int main(){
-    Array heapArray = Array(0);
-    heapArray.addElementAt(0,20);       
-    heapArray.addElementAt(1,11);
-    heapArray.addElementAt(2,5);       
-    heapArray.addElementAt(3,10);
-    heapArray.addElementAt(4,13);       
-    heapArray.addElementAt(5,90);
-    heapArray.addElementAt(6,123);       
-    heapArray.addElementAt(7,-10);
-    heapArray.addElementAt(8,12);       
-    heapArray.addElementAt(9,8);
-    Heap testHeap = Heap(heapArray);
-    testHeap.display();
-    std::cout << std::endl << testHeap.findElementOfValue(120, 0);
-    return 0;
 }

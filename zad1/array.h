@@ -1,5 +1,7 @@
 #include <cstdlib>
 #include <iostream>
+#ifndef ARRAY_H 
+#define ARRAY_H 
 
 class Array{
     int* arrayStart;       // Wskaźnik na początek tablicy, niezbędny do nawigacji po tablicy 
@@ -45,3 +47,4 @@ class Array{
 
         int getSize();
 };
+#endif 

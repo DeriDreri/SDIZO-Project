@@ -244,7 +244,7 @@ void Tree::calculateBalance(TreeNode* node){
 
 void Tree::fixTree(TreeNode* node){
     if(node -> balance >= 2){
-        if(node -> left -> left != nullptr)
+        if(node -> left -> left != nullptr && node -> left -> key > -1)
             rotateRight(node);
         else{
             rotateLeft(node -> left);
@@ -252,7 +252,7 @@ void Tree::fixTree(TreeNode* node){
         }
     }
     else if(node -> balance <= -2){
-        if(node -> right -> right != nullptr)
+        if(node -> right -> right != nullptr && node -> right -> key < 1)
             rotateLeft(node);
         else{
             rotateRight(node->right);
@@ -281,29 +281,4 @@ TreeNode::TreeNode(int value){
     parent = nullptr;
     left = nullptr;
     right = nullptr;
-}
-
-int main(){
-    Tree testTree = Tree();
-    testTree.addNode(20);
-    testTree.addNode(212);
-    testTree.addNode(12);
-    testTree.addNode(0);
-    testTree.addNode(2);
-    testTree.addNode(1);
-    testTree.display();
-    
-    testTree.addNode(30);
-    testTree.addNode(14);
-    testTree.addNode(52);
-    testTree.addNode(-52);
-    testTree.addNode(23);
-    testTree.addNode(6);
-    testTree.display();
-    testTree.deleteNodeOfValue(20);
-    testTree.deleteNodeOfValue(30);
-    testTree.display();
-    std::cout << testTree.findSuccessor(testTree.findMinimumKey()) -> key << std::endl;
-    std::cout << testTree.findPredecessor(testTree.findMaximumKey()) -> key << std::endl;
-    return 0;
 }
