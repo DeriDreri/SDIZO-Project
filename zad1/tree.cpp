@@ -244,7 +244,7 @@ void Tree::calculateBalance(TreeNode* node){
 
 void Tree::fixTree(TreeNode* node){
     if(node -> balance >= 2){
-        if(node -> left -> left != nullptr && node -> left -> key > -1)
+        if(node -> left -> left != nullptr && node -> left -> balance >= 0)
             rotateRight(node);
         else{
             rotateLeft(node -> left);
@@ -252,7 +252,7 @@ void Tree::fixTree(TreeNode* node){
         }
     }
     else if(node -> balance <= -2){
-        if(node -> right -> right != nullptr && node -> right -> key < 1)
+        if(node -> right -> right != nullptr && node -> right -> balance <= 0)
             rotateLeft(node);
         else{
             rotateRight(node->right);
@@ -268,6 +268,11 @@ void Tree::fixTree(TreeNode* node){
         calculateBalance(node -> right);
 }
 
+void Tree::deleteRoot(){
+    if(root!=nullptr){
+        deleteNodeOfValue(root -> key);
+    }
+}
 
 void Tree::display(){
     printNode(root, 0);

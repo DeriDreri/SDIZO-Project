@@ -28,6 +28,7 @@ class Tree{
         TreeNode* findSuccessor(TreeNode * node);
         TreeNode* findPredecessor(TreeNode* node);
         bool deleteNodeOfValue(int value);
+        void deleteRoot();
         void rotateRight(TreeNode* node);
         void rotateLeft(TreeNode* node);
         short calculateNodeLength(TreeNode* node);

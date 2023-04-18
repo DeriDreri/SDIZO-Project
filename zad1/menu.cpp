@@ -9,6 +9,7 @@ unsigned int minimalValue;
 unsigned int maximumValue;
 unsigned int steps;
 unsigned int number;
+int generateValue = 1000000;
 
 int main()
 {
@@ -325,20 +326,66 @@ void treeOperations(){
 
         switch(choice){
             case 1:
-                std::cout << "Wczytywanie";
+                treeLoad();
                 break;
             case 2: 
-                std::cout << "Wyświetlanie";
+                tree[0].display();
                 break;
             case 3:
-                std::cout << "Dodawanie";
+                treeAddTest();
                 break;
             case 4:
-                std::cout << "Usuwanie";
+                treeRemoveTest();
                 break;
             case 5:
-                std::cout << "Szukanie";
+                treeSearchTest();
                 break;
+            case 6:
+                treeGenerate(0, 20);
+                tree[0].display();
+                break;
+            case 7:
+                {
+                    char subChoice;
+                    std::cout << "Czy chcesz użyć domyślnych wartości pomiarowych? [y/n]: ";
+                    std::cin >> subChoice;
+                    std::cout << std::endl;
+                    if(subChoice == 'y')      
+                        treeAdd(5000, 20000, 10, 1);
+                    else{
+                        gatherMeasurmentInput();
+                        treeAdd(minimalValue,maximumValue,steps,number);
+                    }
+                    
+                }break;
+            case 8:
+               {
+                    char subChoice;
+                    std::cout << "Czy chcesz użyć domyślnych wartości pomiarowych? [y/n]: ";
+                    std::cin >> subChoice;
+                    std::cout << std::endl;
+                    if(subChoice == 'y')      
+                        treeRemove(5000, 20000, 10, 1);
+                    else{
+                        gatherMeasurmentInput();
+                        treeRemove(minimalValue,maximumValue,steps,number);
+                    }
+                    
+                }break;
+            case 9:
+                {
+                    char subChoice;
+                    std::cout << "Czy chcesz użyć domyślnych wartości pomiarowych? [y/n]: ";
+                    std::cin >> subChoice;
+                    std::cout << std::endl;
+                    if(subChoice == 'y')      
+                        treeSearch(5000, 20000, 10, 1);
+                    else{
+                        gatherMeasurmentInput();
+                        treeSearch(minimalValue,maximumValue,steps,number);
+                    }
+                    
+                }break;
             default:
                 break;           
         }
@@ -410,7 +457,7 @@ void arrayGenerate(int arrayIndex, int arraySize){
     array[arrayIndex] = Array(0);
     int value;
     for (int i = 0; i < arraySize; i++){
-        value = rand() % 1000000;
+        value = rand() % generateValue;
         array[arrayIndex].addElementAt(i, value);
     }
 }
@@ -423,7 +470,7 @@ void arrayAdd(int minimalElements, int maximumElements, int measurments, int arr
     while(currentElements <= maximumElements){
         for(int i = 0; i < arrayNumber; i++)
             arrayGenerate(i,currentElements);
-        int elementToAdd = rand()%100000;
+        int elementToAdd = rand()%generateValue;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < arrayNumber; i++){
             array[i].addElementAt(0, elementToAdd);
@@ -438,7 +485,7 @@ void arrayAdd(int minimalElements, int maximumElements, int measurments, int arr
     while(currentElements <= maximumElements){
         for(int i = 0; i < arrayNumber; i++)
             arrayGenerate(i,currentElements);
-        int elementToAdd = rand()%100000;
+        int elementToAdd = rand()%generateValue;
         int indexToAdd = rand()%currentElements;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < arrayNumber; i++){
@@ -454,7 +501,7 @@ void arrayAdd(int minimalElements, int maximumElements, int measurments, int arr
     while(currentElements <= maximumElements){
         for(int i = 0; i < arrayNumber; i++)
             arrayGenerate(i,currentElements);
-        int elementToAdd = rand()%100000;
+        int elementToAdd = rand()%generateValue;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < arrayNumber; i++){
             array[i].addElementAt(currentElements-1, elementToAdd);
@@ -521,7 +568,7 @@ void arraySearch(int minimalElements, int maximumElements, int measurments, int 
     while(currentElements <= maximumElements){
         for(int i = 0; i < arrayNumber; i++)
             arrayGenerate(i,currentElements);
-        int elementToFind = rand()%100000;
+        int elementToFind = rand()%generateValue;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < arrayNumber; i++){
             array[i].findElement(elementToFind);
@@ -596,7 +643,7 @@ void listGenerate(int listIndex, int listSize){
     list[listIndex] = List(0);
     int value;
     for (int i = 0; i < listSize; i++){
-        value = rand() % 10000;
+        value = rand() % generateValue;
         list[listIndex].addAtStart(value);
     }
 }
@@ -609,7 +656,7 @@ void listAdd(int minimalElements, int maximumElements, int measurments, int list
     while(currentElements <= maximumElements){
         for(int i = 0; i < listNumber; i++)
             listGenerate(i,currentElements);
-        int elementToAdd = rand()%100000;
+        int elementToAdd = rand()%generateValue;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < listNumber; i++){
             list[i].addAtStart(elementToAdd);
@@ -624,7 +671,7 @@ void listAdd(int minimalElements, int maximumElements, int measurments, int list
     while(currentElements <= maximumElements){
         for(int i = 0; i < listNumber; i++)
             listGenerate(i,currentElements);
-        int elementToAdd = rand()%100000;
+        int elementToAdd = rand()%generateValue;
         int indexToAdd = rand()%currentElements;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < listNumber; i++){
@@ -640,7 +687,7 @@ void listAdd(int minimalElements, int maximumElements, int measurments, int list
     while(currentElements <= maximumElements){
         for(int i = 0; i < listNumber; i++)
             listGenerate(i,currentElements);
-        int elementToAdd = rand()%100000;
+        int elementToAdd = rand()%generateValue;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < listNumber; i++){
             list[i].addAtEnd(elementToAdd);
@@ -708,7 +755,7 @@ void listSearch(int minimalElements, int maximumElements, int measurments, int l
     while(currentElements <= maximumElements){
         for(int i = 0; i < listNumber; i++)
             listGenerate(i,currentElements);
-        int elementToFind = rand()%100000;
+        int elementToFind = rand()%generateValue;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < listNumber; i++){
             list[i].findElementOfValue(elementToFind);
@@ -779,7 +826,7 @@ void heapGenerate(int listIndex, int heapSize, int heapMax){
     heap[listIndex] = Heap(heapMax);
     int value;
     for (int i = 0; i < heapSize; i++){
-        value = rand() % 10000000;
+        value = rand() % generateValue;
         heap[listIndex].add(value);
     }
 }
@@ -792,7 +839,7 @@ void heapAdd(int minimalElements, int maximumElements, int measurments, int heap
     while(currentElements <= maximumElements){
         for(int i = 0; i < heapNumber; i++)
             heapGenerate(i,currentElements, currentElements+1);
-        int elementToAdd = rand()%100000;
+        int elementToAdd = rand()%generateValue;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < heapNumber; i++){
             heap[i].add(elementToAdd);
@@ -832,13 +879,135 @@ void heapSearch(int minimalElements, int maximumElements, int measurments, int h
     while(currentElements <= maximumElements){
         for(int i = 0; i < heapNumber; i++)
             heapGenerate(i,currentElements, currentElements);
-        int elementToFind = rand()%10000000;
+        int elementToFind = rand()%generateValue;
         auto begin = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < heapNumber; i++){
             heap[i].findElementOfValue(elementToFind, 0);
         }
         auto end = std::chrono::high_resolution_clock::now();
         std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / heapNumber << "ns" << std::endl;
+        currentElements += step;
+    }
+}
+void treeLoad(){
+    tree[0] = Tree();
+    string filename;
+    std::ifstream treeFile;
+    std::cout << "Podaj ścieżkę pliku: ";
+    std::cin >> filename;
+    treeFile.open(filename);
+    string sValue;
+    int value;
+    while(treeFile){
+        std::getline(treeFile, sValue);
+        try{
+            value = std::stoi(sValue);
+        }
+        catch(std::invalid_argument){
+            break;
+        }
+        tree[0].addNode(value);
+    }
+    treeFile.close();
+    tree[0].display();
+}
+
+void treeAddTest(){
+    int index;
+    int value;
+    std::cout << std::endl << "Podaj wartość: ";
+    std::cin >> value;
+    tree[0].addNode(value);
+    std::cout << std::endl << "Poprawnie dodano!" << std::endl;
+    tree[0].display();
+}
+
+void treeRemoveTest(){
+    int value;
+    std::cout << "Podaj wartośc: ";
+    std::cin >> value;
+    if(tree[0].deleteNodeOfValue(value)){
+        std::cout << std::endl << "Poprawnie usunięto!" << std::endl;
+        tree[0].display();
+    }
+    else
+        std::cout << std::endl << "Błędna wartość!" << std::endl;
+}
+
+void treeSearchTest(){
+    int value;
+    std::cout << "Podaj szukaną wartość: ";
+    std::cin >> value;
+    if(tree[0].searchValue(value))
+        std::cout << "Element obecny w drzewie";
+    else
+        std::cout << "Brak elementu w drzewie";
+};
+
+void treeGenerate(int treeIndex, int treeSize){
+    tree[treeIndex] = Tree();
+    int value;
+    for (int i = 0; i < treeSize; i++){
+        value = rand() % generateValue;
+        tree[treeIndex].addNode(value);
+    }
+}
+
+void treeAdd(int minimalElements, int maximumElements, int measurments, int treeNumber){
+    int step = (maximumElements - minimalElements) / (measurments);
+    int currentElements = minimalElements;
+
+    std::cout << "----Dodawanie w drzewie AVL----\n";
+    while(currentElements <= maximumElements){
+        for(int i = 0; i < treeNumber; i++)
+            treeGenerate(i,currentElements);
+        int elementToAdd = rand()%generateValue;
+        auto begin = std::chrono::high_resolution_clock::now();
+        for(int i = 0; i < treeNumber; i++){
+            tree[i].addNode(elementToAdd);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / treeNumber << "ns" << std::endl;
+        currentElements += step;
+    }
+
+    
+}
+
+void treeRemove(int minimalElements, int maximumElements, int measurments, int treeNumber){
+
+    int step = (maximumElements - minimalElements) / (measurments);
+    int currentElements = minimalElements;
+
+    std::cout << "----Usuwanie korzenia drzewa----\n";
+    while(currentElements <= maximumElements){
+        for(int i = 0; i < treeNumber; i++)
+            treeGenerate(i,currentElements);
+        auto begin = std::chrono::high_resolution_clock::now();
+        for(int i = 0; i < treeNumber; i++){
+            tree[i].deleteRoot();
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / treeNumber<< "ns" << std::endl;
+        currentElements += step;
+    }
+}
+
+void treeSearch(int minimalElements, int maximumElements, int measurments, int treeNumber){
+    int step = (maximumElements - minimalElements) / (measurments);
+    int currentElements = minimalElements;
+
+    std::cout << "----Szukanie w drzewie----\n";
+    while(currentElements <= maximumElements){
+        for(int i = 0; i < treeNumber; i++)
+            treeGenerate(i,currentElements);
+        int elementToFind = rand()%generateValue;
+        auto begin = std::chrono::high_resolution_clock::now();
+        for(int i = 0; i < treeNumber; i++){
+            tree[i].searchValue(elementToFind);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::cout << currentElements << " | "<< std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count() / treeNumber << "ns" << std::endl;
         currentElements += step;
     }
 }
