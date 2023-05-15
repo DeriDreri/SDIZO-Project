@@ -35,10 +35,22 @@ void Tree::addNode(int value){
 
         //Przebalansowanie drzewa od wstawionego elementu do korzenia
     }
-    while(nodeToInsert != nullptr){
+
+    if(parent != nullptr){
+        calculateBalance(parent);
+        if (parent -> balance == 0) 
+            return;
+        }
+    if(nodeToInsert != nullptr)
         calculateBalance(nodeToInsert);
+    while(nodeToInsert != nullptr){
         fixTree(nodeToInsert);
         nodeToInsert = nodeToInsert -> parent;
+        if(nodeToInsert == nullptr) 
+            break;
+        calculateBalance(nodeToInsert);
+        if(nodeToInsert -> balance == 0) 
+            break;
     }
 }
 
@@ -115,7 +127,7 @@ bool Tree::deleteNodeOfValue(int value){
         childNode -> parent = nodeToReplace -> parent;                              //węzeł potomkiem lub następnikiem
     parentNode = nodeToReplace -> parent;
     if(nodeToReplace -> parent == nullptr)                                          //Jeśli usuwany węzeł jest korzeniem, musimy ustawić nowy korzeń
-        root = nodeToReplace;
+        root = childNode;
     else
         if(nodeToReplace == nodeToReplace -> parent -> left)
             nodeToReplace -> parent -> left = childNode;
@@ -123,12 +135,15 @@ bool Tree::deleteNodeOfValue(int value){
             nodeToReplace -> parent -> right = childNode;
     if(nodeToReplace != nodeToDelete)
         nodeToDelete -> key = nodeToReplace -> key;
-    
+ //   if  (root -> right == nullptr && root -> left == nullptr)
+//       root = nullptr;
     free(nodeToReplace);
 
     //Przebalansowanie drzewa od wstawionego elementu do korzenia
     while(parentNode != nullptr){
         calculateBalance(parentNode);
+        if(parentNode -> balance == 0)
+            break;
         fixTree(parentNode);
         parentNode = parentNode -> parent;
     }
@@ -262,10 +277,10 @@ void Tree::fixTree(TreeNode* node){
     else 
         return;
     calculateBalance(node);
-    if(node -> left != nullptr)
-        calculateBalance(node -> left);
-    if(node -> right != nullptr)
-        calculateBalance(node -> right);
+    //if(node -> left != nullptr)
+    //    calculateBalance(node -> left);
+    //if(node -> right != nullptr)
+    //    calculateBalance(node -> right);
 }
 
 void Tree::deleteRoot(){
@@ -275,7 +290,8 @@ void Tree::deleteRoot(){
 }
 
 void Tree::display(){
-    printNode(root, 0);
+    if(root != nullptr)
+        printNode(root, 0);
     std::cout << std::endl;
 }
 

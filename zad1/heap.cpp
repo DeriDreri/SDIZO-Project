@@ -92,7 +92,14 @@ bool Heap::removeAt(int index){
     heapArray.setValueAt(heapSize-1, heapArray.valueAt(index));         //Wstawienie wartośći do usunięcia na ostatni liść
     heapArray.setValueAt(index, valueToSwap);                           //Wstawienie wartości zachowanej z ostatniego liścia na miejsce usuwanego wierzchołka
     heapSize--;                                                         //Usunięcie ostatniego liścia
-    fixHeapDown(index);                                                 //Naprawa kopca
+    int lastParentIndex = (heapSize-2)/2;
+    if (index <= lastParentIndex){
+        int parentIndex = (index - 1) / 2;
+        if(parentIndex < 0 || heapArray.valueAt(parentIndex) < heapArray.valueAt(index))
+            fixHeapUp(index);                                                           //Naprawa kopca
+        else
+            fixHeapDown(index);
+    }
     return true;
 }
 
@@ -120,8 +127,8 @@ void Heap::printNode(int depth, int parentIndex){
 }
 
 void Heap::displayTree(){
-    
-    printNode(0, 0);
+    if(heapSize > 0)
+        printNode(0, 0);
     std::cout << std::endl;
     
 }

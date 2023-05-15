@@ -9,7 +9,7 @@ unsigned int minimalValue;
 unsigned int maximumValue;
 unsigned int steps;
 unsigned int number;
-int generateValue = 1000000;
+int generateValue = 10000000;
 
 int main()
 {
