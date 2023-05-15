@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <stdexcept>
 using namespace std::string_literals;
-
+#ifndef MATRIX_H 
+#define MATRIX_H 
 class MatrixN{
     int dimension;
     int * array;
@@ -19,3 +20,4 @@ class MatrixN{
         void insert(int x, int y, int value);
         void print();
 };
+#endif

@@ -1,5 +1,6 @@
 #include "matrixN.h"
-
+#ifndef MATRIX_C
+#define MATRIX_C 
 
 MatrixN::MatrixN(int startingDimension){
     dimension = startingDimension;
@@ -31,3 +32,4 @@ void MatrixN::print(){
         printf("%d ", array[i]);
     }
 }
+#endif
