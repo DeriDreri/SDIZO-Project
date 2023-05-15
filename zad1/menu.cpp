@@ -396,7 +396,10 @@ void treeOperations(){
 void arrayLoad(){
     array[0] = Array(0);
     std::ifstream arrayFile;
-    arrayFile.open("data/tab1.txt");
+    string filename;
+    std::cout << "Podaj ścieżkę pliku: ";
+    std::cin >> filename;
+    arrayFile.open(filename);
     int i = 0;
     string sValue;
     int value;

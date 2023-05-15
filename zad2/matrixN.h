@@ -9,6 +9,7 @@ class MatrixN{
     int * array;
     public:
 
+        MatrixN();
         //Definiuje macierz kwadratową o niezmienionym rozmiarze
         MatrixN(int dimension);
         ~MatrixN();

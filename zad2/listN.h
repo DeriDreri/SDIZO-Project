@@ -17,6 +17,7 @@ class ListN{
     ListElement ** neighbours;
     ListElement ** weights;
     public:
+        ListN();
         ListN(int amountOfNodes);
         ~ListN();
         void addEdge(int start, int end, int value);

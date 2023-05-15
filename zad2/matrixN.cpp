@@ -2,6 +2,10 @@
 #ifndef MATRIX_C
 #define MATRIX_C 
 
+MatrixN::MatrixN(){
+    MatrixN(1);
+}
+
 MatrixN::MatrixN(int startingDimension){
     dimension = startingDimension;
     array = (int* )malloc(startingDimension * startingDimension * sizeof(int));
@@ -31,5 +35,6 @@ void MatrixN::print(){
         if (i % dimension == 0) printf("\n");
         printf("%d ", array[i]);
     }
+    printf("\n");
 }
 #endif

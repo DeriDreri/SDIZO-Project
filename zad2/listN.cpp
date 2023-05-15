@@ -7,6 +7,10 @@ ListElement::ListElement(ListElement * previous, int value, ListElement * next){
     this -> next = next;
 }
 
+ListN::ListN(){
+    ListN(10);
+}
+
 ListN::ListN(int amountOfNodes){
     this -> size = amountOfNodes;
     this -> neighbours = (ListElement **)malloc(amountOfNodes * sizeof(ListElement*));
