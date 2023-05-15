@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include<iostream>
+#ifndef LIST_H 
+#define LIST_H 
 
 class ListElement{
     public:
@@ -62,3 +64,4 @@ class List{
         ListElement * findElementOfValue(int valueToFind);
 
 };
+#endif 

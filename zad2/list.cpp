@@ -1,4 +1,6 @@
 #include "list.h"
+#ifndef LIST_C 
+#define LIST_C 
 
 ListElement::ListElement(ListElement * previous, int value, ListElement * nex){
     this -> prev = previous;
@@ -169,3 +171,4 @@ ListElement * List::findElementOfValue(int valueToFind){
             currentPointer = currentPointer -> next;
         }
 }
+#endif 
