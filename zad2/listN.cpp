@@ -1,22 +1,18 @@
 #include "listN.h"
 #ifndef LISTN_C 
 #define LISTN_C
-ListElement::ListElement(ListElement * previous, int value, ListElement * next){
+ListElementN::ListElementN(ListElementN * previous, int value, ListElementN * next){
     this -> prev = previous;
     this -> value = value;
     this -> next = next;
 }
 
-ListN::ListN(){
-    ListN(10);
-}
-
 ListN::ListN(int amountOfNodes){
     this -> size = amountOfNodes;
-    this -> neighbours = (ListElement **)malloc(amountOfNodes * sizeof(ListElement*));
+    this -> neighbours = (ListElementN **)malloc(amountOfNodes * sizeof(ListElementN*));
     for(int i = 0; i < amountOfNodes; i++)
         neighbours[i] = nullptr;
-    this -> weights = (ListElement **)malloc(amountOfNodes * sizeof(ListElement*));
+    this -> weights = (ListElementN **)malloc(amountOfNodes * sizeof(ListElementN*));
     for(int i = 0; i < amountOfNodes; i++)
         weights[i] = nullptr;
 }
@@ -26,6 +22,10 @@ ListN::~ListN(){
     free(weights);
 }
 
+int ListN::getSize(){
+    return this -> size;
+}
+
 void ListN::print(){
     for (int i = 0; i < size; i++){
         printf("%d -> ", i);
@@ -33,8 +33,8 @@ void ListN::print(){
             printf("\n");
             continue; 
         }
-        ListElement * currentN = neighbours[i];
-        ListElement * currentW = weights[i];
+        ListElementN * currentN = neighbours[i];
+        ListElementN * currentW = weights[i];
         while(currentN != nullptr){
             printf("(%d, %d) ", currentN -> value, currentW -> value);
             currentN = currentN -> next;
@@ -44,22 +44,51 @@ void ListN::print(){
     }
 }       
 
+int * ListN::getAdjusted(int node){
+    if(neighbours[node] == nullptr) 
+        return 0;
+    int * adjusted = (int *)malloc(sizeof(int));
+    adjusted[0] = 0;
+    ListElementN * current = neighbours[node];
+    while(current != nullptr){
+        adjusted[0] = adjusted[0] + 1;
+        adjusted = (int *)realloc(adjusted, (adjusted[0]+1)*sizeof(int));
+        adjusted[adjusted[0]] = current -> value;
+        current = current -> next;
+    }
+    return adjusted;
+}
+
+int ListN::getEdgeWage(int start, int end){
+    if(start >= size || end >= size)
+        throw "Index out of bonds";
+    ListElementN * currentPointer = neighbours[start];
+    ListElementN * currentWeight = weights[start];
+    while(currentPointer != nullptr){
+        if(currentPointer -> value == end)
+            return currentWeight -> value;
+        currentPointer = currentPointer -> next;
+        currentWeight = currentWeight -> next;
+    }
+    return 0;
+}
+
 void ListN::addEdge(int start, int end, int value){
     if(start >= size || end >= size)
         throw std::out_of_range("Nie ma takiego wierzchołka");
     if(neighbours[start] == nullptr){
-        neighbours[start] = new ListElement(nullptr, end, nullptr);
-        weights[start] = new ListElement(nullptr, value, nullptr);
+        neighbours[start] = new ListElementN(nullptr, end, nullptr);
+        weights[start] = new ListElementN(nullptr, value, nullptr);
     }
     else{
-        ListElement * currentN = neighbours[start];
-        ListElement * currentW = weights[start];
+        ListElementN * currentN = neighbours[start];
+        ListElementN * currentW = weights[start];
         while(currentN -> next != nullptr){
             currentN = currentN -> next;
             currentW = currentW -> next;
         }
-        currentN -> next = new ListElement(currentN, end, nullptr);
-        currentW -> next = new ListElement(currentW, value, nullptr);
+        currentN -> next = new ListElementN(currentN, end, nullptr);
+        currentW -> next = new ListElementN(currentW, value, nullptr);
     }
 }
 

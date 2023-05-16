@@ -2,18 +2,22 @@
 #ifndef MATRIX_C
 #define MATRIX_C 
 
-MatrixN::MatrixN(){
-    MatrixN(1);
-}
+
 
 MatrixN::MatrixN(int startingDimension){
     dimension = startingDimension;
     array = (int* )malloc(startingDimension * startingDimension * sizeof(int));
+    for(int i = 0; i < dimension * dimension; i++){
+        array[i] = 0;
+    }
 }
 
 MatrixN::~MatrixN(){
-    if(array != NULL)
-        free(array);
+    free(array);
+}
+
+int MatrixN::getDimension(){
+    return this -> dimension;
 }
 
 int MatrixN::get(int x, int y){
@@ -28,6 +32,22 @@ void MatrixN::insert(int x, int y, int value){
         throw std::out_of_range("Pozycja spoza macierzy");
     int position = x + dimension * y;
     array[position] = value;
+}
+
+int * MatrixN::getAdjusted(int node){
+    int * adjusted = (int *)malloc(sizeof(int));
+    adjusted[0] = 0;
+    for(int i = 0; i < dimension; i++){
+        if(array[node * dimension + i] != 0){
+            adjusted[0] = adjusted[0] + 1;
+            adjusted = (int *)realloc(adjusted, adjusted[0] * sizeof(int));
+            adjusted[adjusted[0]] = i;
+        }
+    }
+    return adjusted;
+}
+int MatrixN::getEdgeWage(int start, int end){
+    return array[start * dimension + end];
 }
 
 void MatrixN::print(){

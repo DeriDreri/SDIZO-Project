@@ -4,6 +4,7 @@
 #include <fstream>
 #include "matrixN.cpp"
 #include "listN.cpp"
+#include "prime.cpp"
 
 using namespace std;
 
@@ -13,3 +14,4 @@ void mstOperations();
 void shortPathOperations();
 void maxFlowOperatons();
 void loadMST();
+void primeAlgorithm();

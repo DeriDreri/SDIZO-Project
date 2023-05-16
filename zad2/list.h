@@ -51,6 +51,10 @@ class List{
 
         void removeEnd();
 
+        int getSize();
+
+        int valueAt(int position);
+
         bool removeAt(int index);
         /// @brief Usuwa pierwszy element o podanej wartości jeśli występuje w liście
         /// @param valueToRemove Wartość elementu to usunięcia

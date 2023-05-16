@@ -4,26 +4,29 @@
 #ifndef LISTN_H
 #define LISTN_H
 
-class ListElement{
+class ListElementN{
     public:
-        ListElement * next;                                                     //Wskaźnik na następny element listy
-        ListElement * prev;                                                     //Wskaźnik na poprzedni element listy
+        ListElementN * next;                                                     //Wskaźnik na następny element listy
+        ListElementN * prev;                                                     //Wskaźnik na poprzedni element listy
         int value;                                                              //Wartość elementu listy
-        ListElement(ListElement * previous, int value, ListElement * next);     //Konstruktor przypisujący dwa powiązane elementy listy oraz wartość
+        ListElementN(ListElementN * previous, int value, ListElementN * next);     //Konstruktor przypisujący dwa powiązane elementy listy oraz wartość
 };
 
 class ListN{
     int size;
-    ListElement ** neighbours;
-    ListElement ** weights;
+    ListElementN ** neighbours;
+    ListElementN ** weights;
     public:
-        ListN();
+
         ListN(int amountOfNodes);
         ~ListN();
+        int getSize();
         void addEdge(int start, int end, int value);
         bool hasEdge(int start, int end);
         bool valueOfEdge(int start, int end);
         void print();
+        int * getAdjusted(int node);
+        int getEdgeWage(int start, int end);
 };
 
 

@@ -166,10 +166,30 @@ bool List::removeElementOfValue(int valueToRemove){
     free(currentPointer);
     return true;
 }
+int List::getSize(){
+    int size = 0;
+    ListElement * currentPointer = head;
+    while(currentPointer != nullptr){
+        size++;
+        currentPointer = currentPointer -> next;
+    }
+    return size;
+}
+
+int List::valueAt(int position){
+    if(position >= this -> getSize()) 
+        throw "Out of bounds";
+    ListElement * current = head;
+    while(position > 0){   
+        current = current -> next;
+        position--;
+    }
+    return current -> value;
+}
 
 ListElement * List::findElementOfValue(int valueToFind){
     ListElement* currentPointer = head;
-        while(true){
+        while(currentPointer != nullptr){
             if(currentPointer -> value == valueToFind) return currentPointer; 
             if(currentPointer == tail) return nullptr;                              //Przy osiągnieciu ogona funkcja zwraca pusty wskaźnik
             currentPointer = currentPointer -> next;

@@ -1,7 +1,7 @@
 #include "menu.h"
 
-ListN list[20];
-MatrixN matrix[20];
+ListN ** list;
+MatrixN ** matrix;
 
 int main()
 {
@@ -50,13 +50,30 @@ void mstOperations(){
             case 1:
             loadMST();
             break;
+
+            case 3:
+            if(matrix != nullptr && matrix[0] != nullptr)
+                matrix[0] -> print();
+            else
+                std::cout << "Brak macierzy sąsiadów\n";
+
+            if(list != nullptr && list[0] != nullptr)
+                list[0] -> print();
+            else
+                std::cout << "Brak listy sąsiadów\n";
+            break;
+
+            case 4:
+            primeAlgorithm();
+            break;
         }
     }
 
 }
 
 void loadMST(){
-   
+
+
     std::cout << "Podaj ściezkę pliku: ";
     std::string pathName;
     std::cin >> pathName;
@@ -67,8 +84,18 @@ void loadMST(){
 
     std::getline(inputFile, sValue);
     sValue = sValue.substr(sValue.find_first_of(' ') +1);
-    MatrixN matrix = MatrixN(std::stoi(sValue));
-    ListN list = ListN(std::stoi(sValue));
+    if (matrix == nullptr)
+        matrix = (MatrixN **)malloc(sizeof(MatrixN *));
+    if (matrix != nullptr && matrix[0] != nullptr)
+        delete matrix[0];
+
+    if (list == nullptr)
+        list = (ListN **)malloc(sizeof(ListN *));
+    if(list != nullptr && list[0] != nullptr) 
+        delete list[0];
+
+    matrix[0] = new MatrixN(std::stoi(sValue));
+    list[0] = new ListN(std::stoi(sValue));
 
     string start, end, value;
     int startValue, endValue, valueValue;
@@ -91,13 +118,23 @@ void loadMST(){
             break;
         }
 
-        matrix.insert(startValue, endValue, valueValue);
-        matrix.insert(endValue, startValue, valueValue);
+        matrix[0] -> insert(startValue, endValue, valueValue);
+        matrix[0] -> insert(endValue, startValue, valueValue);
 
-        list.addEdge(startValue, endValue, valueValue);
-        list.addEdge(endValue, startValue, valueValue);
+        list[0] -> addEdge(startValue, endValue, valueValue);
+        list[0] -> addEdge(endValue, startValue, valueValue);
     }
     inputFile.close();
-    matrix.print();
-    list.print();
+    matrix[0] -> print();
+    list[0] -> print();
+}
+
+void primeAlgorithm(){
+    primeMatrix(matrix[0]);
+    primeList(list[0]);
+}
+
+
+void kruskalAlgoritm(){
+    return;
 }
