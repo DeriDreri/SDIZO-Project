@@ -5,13 +5,17 @@
 #include "matrixN.cpp"
 #include "listN.cpp"
 #include "prime.cpp"
+#include "kruskal.cpp"
 
 using namespace std;
 
 void printMainMenu(void);
-void printSubMenu(string nameOfStructure);
+void printSubMenu(string);
 void mstOperations();
-void shortPathOperations();
+void shortestPathOperations();
 void maxFlowOperatons();
-void loadMST();
+void loadFile(bool);
 void primeAlgorithm();
+void kruskalAlgoritm();
+void djikstraAlgorithm();
+void bellmanFordAlgoritm();

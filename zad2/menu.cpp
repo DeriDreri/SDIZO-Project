@@ -16,6 +16,9 @@ int main()
             case 1:
                 mstOperations();
                 break;
+            case 2:
+                shortestPathOperations();
+                break;
         };
     }
     while(choice);
@@ -48,7 +51,7 @@ void mstOperations(){
         std::cin >> choice;
         switch(choice){
             case 1:
-            loadMST();
+            loadFile(true);
             break;
 
             case 3:
@@ -66,12 +69,55 @@ void mstOperations(){
             case 4:
             primeAlgorithm();
             break;
+
+            case 5:
+            kruskalAlgoritm();
+            break;
         }
     }
 
 }
 
-void loadMST(){
+void shortestPathOperations(){
+ short choice = -1;
+    while(choice != 0){
+        printSubMenu("Minimalne drzewo rozpinające");
+        std::cout << "4. Algorytm Djikstry\n"
+        << "5. Alogrytm Bellmana-Forda\n"
+        << "0. Wyjście\n"
+        << "Wybór: ";
+        std::cin >> choice;
+        switch(choice){
+            case 1:
+            loadFile(false);
+            break;
+
+            case 3:
+            if(matrix != nullptr && matrix[0] != nullptr)
+                matrix[0] -> print();
+            else
+                std::cout << "Brak macierzy sąsiadów\n";
+
+            if(list != nullptr && list[0] != nullptr)
+                list[0] -> print();
+            else
+                std::cout << "Brak listy sąsiadów\n";
+            break;
+
+            case 4:
+            djikstraAlgorithm();
+            break;
+
+            case 5:
+            bellmanFordAlgoritm();
+            break;
+        }
+    }
+
+
+}
+
+void loadFile(bool isMst){
 
 
     std::cout << "Podaj ściezkę pliku: ";
@@ -119,15 +165,18 @@ void loadMST(){
         }
 
         matrix[0] -> insert(startValue, endValue, valueValue);
-        matrix[0] -> insert(endValue, startValue, valueValue);
+        if(isMst)
+            matrix[0] -> insert(endValue, startValue, valueValue);
 
         list[0] -> addEdge(startValue, endValue, valueValue);
-        list[0] -> addEdge(endValue, startValue, valueValue);
+        if (isMst)
+           list[0] -> addEdge(endValue, startValue, valueValue);
     }
     inputFile.close();
     matrix[0] -> print();
     list[0] -> print();
 }
+
 
 void primeAlgorithm(){
     primeMatrix(matrix[0]);
@@ -136,5 +185,15 @@ void primeAlgorithm(){
 
 
 void kruskalAlgoritm(){
+    kruskalMatrix(matrix[0]);
+    kruskalList(list[0]);
+}
+
+void djikstraAlgorithm(){
     return;
 }
+
+
+void bellmanFordAlgoritm(){
+    return;
+};

@@ -155,7 +155,7 @@ bool List::removeElementOfValue(int valueToRemove){
         if (tail -> prev != nullptr)
             tail -> prev -> next = nullptr;
         tail = tail -> prev;
-        free(currentPointer);
+        //free(currentPointer);
         return true;
 
     }
@@ -194,4 +194,5 @@ ListElement * List::findElementOfValue(int valueToFind){
             if(currentPointer == tail) return nullptr;                              //Przy osiągnieciu ogona funkcja zwraca pusty wskaźnik
             currentPointer = currentPointer -> next;
         }
+    return currentPointer;
 }

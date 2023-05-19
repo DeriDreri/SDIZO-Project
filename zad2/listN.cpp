@@ -18,8 +18,12 @@ ListN::ListN(int amountOfNodes){
 }
 
 ListN::~ListN(){
-    free(neighbours);
-    free(weights);
+   // if(neighbours != nullptr)
+   //    free(neighbours);
+   //    neighbours = nullptr;
+   // if(weights != nullptr)
+   //     free(weights);
+   //     weights = nullptr;
 }
 
 int ListN::getSize(){

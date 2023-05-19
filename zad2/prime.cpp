@@ -27,13 +27,29 @@ void primeMatrix(MatrixN * matrix){
         }
     }
 
+    int counter = 0;
+    printf("----- Macierzowo ------\n");
+    for(int i = 0; i < nodesNumber; i++){
+        if(key[i] == 0)
+            continue;
+        printf("(%d, %d) : %d\n", i, previous[i], key[i]);
+        counter+= key[i];
+    }
+    printf("Koszt całkowity: %d\n", counter);
     //Tworzy drzewo spinające na podstawie uzyskanych wartości previous i key
-    MatrixN newMatrix = MatrixN(matrix -> getDimension());
+    /*MatrixN newMatrix = MatrixN(matrix -> getDimension());
     for(int i = 0; i < matrix -> getDimension(); i++){
         newMatrix.insert(i, previous[i], key[i]);
         newMatrix.insert(previous[i], i, key[i]);
     }
-    newMatrix.print();
+    newMatrix.print();*/
+
+    free(key);
+    key = nullptr;
+    free(query);
+    query = nullptr;
+    free(previous);
+    previous = nullptr;
 }
 
 void primeList(ListN * list){
@@ -47,7 +63,7 @@ void primeList(ListN * list){
     int nodesNumber = list -> getSize();
     int * key = (int *)malloc(nodesNumber * sizeof(int));
     int * previous = (int *)malloc(nodesNumber * sizeof(int));
-    List * query = new List(0);
+    List * query = new List(0);             // POPRWIĆ NA KOPIEC
     for (int i = 0; i < nodesNumber; i++){
         key[i] = INT_MAX-1;
         previous[i] = -1;
@@ -70,14 +86,23 @@ void primeList(ListN * list){
     }
 
     //Tworzy drzewo spinające na podstawie uzyskanych wartości previous i key
-    ListN newList = ListN(list -> getSize());
+    int counter = 0;
+    printf("----- Listowo ------\n");
+    for(int i = 0; i < nodesNumber; i++){
+        if(key[i] == 0)
+            continue;
+        printf("(%d, %d) : %d\n", i, previous[i], key[i]);
+        counter+=key[i];
+    }
+    printf("Koszt całkowity: %d\n", counter);
+    /*ListN newList = ListN(list -> getSize());
     for(int i = 0; i < list -> getSize(); i++){
         if(key[i] == 0) continue;
         newList.addEdge(i, previous[i], key[i]);
         newList.addEdge(previous[i], i, key[i]);
     }
 
-    newList.print();
+    newList.print();*/
 }
 
 //Funckja oparta o listę
@@ -91,5 +116,6 @@ int extractMin(List * list, int * key){
         }
     }
     list -> removeElementOfValue(minimalNode);
+    //list -> displayList();
     return minimalNode;
 }
