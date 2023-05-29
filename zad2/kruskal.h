@@ -1,13 +1,8 @@
 #include <iostream>
 #include "matrixN.cpp"
 #include "listN.cpp"
+#include "edge.h"
 
-typedef struct 
-{
-    int start;
-    int end;
-    int value;
-}edge;
 
 typedef struct 
 {

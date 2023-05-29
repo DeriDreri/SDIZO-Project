@@ -13,7 +13,9 @@ MatrixN::MatrixN(int startingDimension){
 }
 
 MatrixN::~MatrixN(){
-    free(array);
+    if(array != nullptr)
+        free(array);
+        array == nullptr;
 }
 
 int MatrixN::getDimension(){
@@ -47,7 +49,7 @@ int * MatrixN::getAdjusted(int node){
     return adjusted;
 }
 int MatrixN::getEdgeWage(int start, int end){
-    return array[start * dimension + end];
+    return array[end * dimension + start];
 }
 
 void MatrixN::print(){

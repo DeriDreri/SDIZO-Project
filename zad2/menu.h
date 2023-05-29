@@ -6,7 +6,8 @@
 #include "listN.cpp"
 #include "prime.cpp"
 #include "kruskal.cpp"
-
+#include "djikstra.cpp"
+#include "bellmanFord.cpp"
 using namespace std;
 
 void printMainMenu(void);

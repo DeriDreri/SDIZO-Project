@@ -1,10 +1,10 @@
 #include "menu.h"
 
-ListN ** list;
-MatrixN ** matrix;
+ListN * listN[20];
+MatrixN * matrix[20];
+int startingNode;
 
-int main()
-{
+int main(){
     int choice;
     do{
         printMainMenu();
@@ -60,8 +60,8 @@ void mstOperations(){
             else
                 std::cout << "Brak macierzy sąsiadów\n";
 
-            if(list != nullptr && list[0] != nullptr)
-                list[0] -> print();
+            if(listN != nullptr && listN[0] != nullptr)
+                listN[0] -> print();
             else
                 std::cout << "Brak listy sąsiadów\n";
             break;
@@ -81,7 +81,7 @@ void mstOperations(){
 void shortestPathOperations(){
  short choice = -1;
     while(choice != 0){
-        printSubMenu("Minimalne drzewo rozpinające");
+        printSubMenu("Najkrótsza droga");
         std::cout << "4. Algorytm Djikstry\n"
         << "5. Alogrytm Bellmana-Forda\n"
         << "0. Wyjście\n"
@@ -98,8 +98,8 @@ void shortestPathOperations(){
             else
                 std::cout << "Brak macierzy sąsiadów\n";
 
-            if(list != nullptr && list[0] != nullptr)
-                list[0] -> print();
+            if(listN != nullptr && listN[0] != nullptr)
+                listN[0] -> print();
             else
                 std::cout << "Brak listy sąsiadów\n";
             break;
@@ -129,19 +129,29 @@ void loadFile(bool isMst){
     string sValue;
 
     std::getline(inputFile, sValue);
-    sValue = sValue.substr(sValue.find_first_of(' ') +1);
-    if (matrix == nullptr)
-        matrix = (MatrixN **)malloc(sizeof(MatrixN *));
-    if (matrix != nullptr && matrix[0] != nullptr)
+    string nodes= sValue.substr(sValue.find_first_of(' ') +1);
+    if(!isMst){
+        nodes = nodes.substr(0, nodes.find_last_of(' '));
+    }
+
+
+    if (matrix != nullptr && matrix[0] != nullptr){
         delete matrix[0];
+        matrix[0] == nullptr;
+    }
+    if(listN != nullptr && listN[0] != nullptr){
+        delete listN[0];
+        listN[0] == nullptr;
+    }
 
-    if (list == nullptr)
-        list = (ListN **)malloc(sizeof(ListN *));
-    if(list != nullptr && list[0] != nullptr) 
-        delete list[0];
+    matrix[0] = new MatrixN(std::stoi(nodes));
+    listN[0] = new ListN(std::stoi(nodes));
 
-    matrix[0] = new MatrixN(std::stoi(sValue));
-    list[0] = new ListN(std::stoi(sValue));
+    if(!isMst){
+        string startingNodeS = sValue.substr(sValue.find_last_of(' ') + 1);
+        if (startingNodeS.find('\r') != std::string::npos)
+            startingNode = std::stoi(startingNodeS.substr(0, startingNodeS.length()-1));
+    }
 
     string start, end, value;
     int startValue, endValue, valueValue;
@@ -168,32 +178,33 @@ void loadFile(bool isMst){
         if(isMst)
             matrix[0] -> insert(endValue, startValue, valueValue);
 
-        list[0] -> addEdge(startValue, endValue, valueValue);
+        listN[0] -> addEdge(startValue, endValue, valueValue);
         if (isMst)
-           list[0] -> addEdge(endValue, startValue, valueValue);
+           listN[0] -> addEdge(endValue, startValue, valueValue);
     }
     inputFile.close();
     matrix[0] -> print();
-    list[0] -> print();
+    listN[0] -> print();
 }
 
 
 void primeAlgorithm(){
     primeMatrix(matrix[0]);
-    primeList(list[0]);
+    primeList(listN[0]);
 }
 
 
 void kruskalAlgoritm(){
     kruskalMatrix(matrix[0]);
-    kruskalList(list[0]);
+    kruskalList(listN[0]);
 }
 
 void djikstraAlgorithm(){
-    return;
+    djikstraMatrix(matrix[0], startingNode);
+    djikstraList(listN[0], startingNode);
 }
 
 
 void bellmanFordAlgoritm(){
-    return;
+    bellFordMatrix(matrix[0], startingNode);
 };
