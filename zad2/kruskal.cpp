@@ -2,12 +2,11 @@
 
 
 
-void kruskalMatrix(MatrixN * matrix){
+edge * kruskalMatrix(MatrixN * matrix){
     int size = matrix -> getDimension();
-    tree * subTrees = (tree *)malloc(size * sizeof(tree));
+    int * subTrees = (int *)malloc(size * sizeof(int));
     for(int i = 0; i < size; i++){
-        subTrees[i].node = i;
-        subTrees[i].tree = i;
+        subTrees[i] = i;
     }
 
     int edgesNumber = 0;
@@ -35,51 +34,26 @@ void kruskalMatrix(MatrixN * matrix){
     edge * finalEdgesList = (edge *)malloc(edgesNumber * sizeof(edge));
     counter = 0;
     for(int i = 0; i < edgesNumber; i++){
-        if(findSet(edgesList[i].start, subTrees) == findSet(edgesList[i].end, subTrees))
+        if(subTrees[edgesList[i].start] == subTrees[edgesList[i].end])
             continue;
         finalEdgesList[counter] = {edgesList[i].start, edgesList[i].end, edgesList[i].value};
         treesUnion(edgesList[i].start, edgesList[i].end, subTrees, edgesNumber);
         counter++;
     }
 
-    /*for (int i =0; i < size; i++){
-        printf("[%d, %d]\n", subTrees[i].node, subTrees[i].tree);
-    }*/
 
-    int cost = 0;
-    std::cout << "------ Macierzowo -----" << std::endl;
-    for(int i = 0; i < counter; i++){
-        printf("(%d, %d) : %d\n", finalEdgesList[i].start, finalEdgesList[i].end, finalEdgesList[i].value);
-        cost += finalEdgesList[i].value;
-    }
-    std::cout << "Koszt całkowity: " << cost << std::endl;
-
-    /*MatrixN newMatrix = MatrixN(size);
-    for(int i = 0; i < counter; i++){
-        newMatrix.insert(finalEdgesList[i].start,finalEdgesList[i].end, finalEdgesList[i].value);
-        newMatrix.insert(finalEdgesList[i].end, finalEdgesList[i].start, finalEdgesList[i].value);
-    }
-
-
-    newMatrix.print();*/
-
-    free(finalEdgesList);
-    finalEdgesList = nullptr;
     free(subTrees);
     subTrees = nullptr;
+
+    return finalEdgesList;
 }
 
 
-int findSet(int node, tree * subTrees){
-    return subTrees[node].tree;
-}
-
-void kruskalList(ListN * list){
+edge * kruskalList(ListN * list){
     int size = list -> getSize();
-    tree * subTrees = (tree *)malloc(size * sizeof(tree));
+    int * subTrees = (int *)malloc(size * sizeof(int));
     for(int i = 0; i < size; i++){
-        subTrees[i].node = i;
-        subTrees[i].tree = i;
+        subTrees[i] = i;
     }
 
     int edgesNumber = 0;
@@ -102,40 +76,24 @@ void kruskalList(ListN * list){
     edge * finalEdgesList = (edge *)malloc(edgesNumber * sizeof(edge));
     counter = 0;
     for(int i = 0; i < edgesNumber; i++){
-        if(findSet(edgesList[i].start, subTrees) == findSet(edgesList[i].end, subTrees))
+        if(subTrees[edgesList[i].start] == subTrees[edgesList[i].end])
             continue;
         finalEdgesList[counter]= {edgesList[i].start, edgesList[i].end, edgesList[i].value};
         treesUnion(edgesList[i].start, edgesList[i].end, subTrees, edgesNumber);
         counter++;
     }
-    
-    int cost = 0;
-    std::cout << "------ Listowo -----" << std::endl;
-    for(int i = 0; i < counter; i++){
-        printf("(%d, %d) : %d\n", finalEdgesList[i].start, finalEdgesList[i].end, finalEdgesList[i].value);
-        cost += finalEdgesList[i].value;
-    }
-    std::cout << "Koszt całkowity: " << cost << std::endl;
 
-    /*ListN newList = ListN(size);
-    for(int i = 0; i < counter; i++){
-        newList.addEdge(finalEdgesList[i].start,finalEdgesList[i].end, finalEdgesList[i].value);
-        newList.addEdge(finalEdgesList[i].end, finalEdgesList[i].start, finalEdgesList[i].value);
-    }
-
-    newList.print();*/
-
-    free(finalEdgesList);
-    finalEdgesList = nullptr;
     free(subTrees);
     subTrees = nullptr;
+
+    return finalEdgesList;
 }
 
-void treesUnion(int first, int second, tree * trees, int size){
-    int change = trees[second].tree; 
+void treesUnion(int first, int second, int * trees, int size){
+    int change = trees[second]; 
     for (int i = 0; i < size; i++){
-        if(trees[i].tree == change)
-            trees[i].tree = trees[first].tree;
+        if(trees[i] == change)
+            trees[i] = trees[first];
     }    
 }
 

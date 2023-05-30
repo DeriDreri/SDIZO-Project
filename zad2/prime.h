@@ -3,7 +3,8 @@
 #include "list.cpp"
 #include <iostream>
 #include <limits.h>
+#include "heapN.cpp"
 using namespace std;
-void primeMatrix(MatrixN * matrix);
-void primeList(ListN * list);
+int ** primeMatrix(MatrixN * matrix, int nodesNumber);
+int ** primeList(ListN * list, int nodesNumber);
 int extractMin(List * list, int * key);

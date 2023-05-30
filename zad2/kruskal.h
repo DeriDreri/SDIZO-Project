@@ -4,14 +4,8 @@
 #include "edge.h"
 
 
-typedef struct 
-{
-    int node;
-    int tree;
-}tree;
 
-void kruskalMatrix(MatrixN * matrix);
-void kruskalList(ListN * list);
-void treesUnion(int first, int second, tree * trees, int size);
+edge *  kruskalMatrix(MatrixN * matrix);
+edge *  kruskalList(ListN * list);
+void treesUnion(int first, int second, int * trees, int size);
 void bubbleEdgesSort(edge * edgesList, int size);
-int findSet(int node, tree * subTrees);

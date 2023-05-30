@@ -2,6 +2,8 @@
 #include "listN.cpp"
 #include "edge.h"
 #include <limits.h>
+#include <stdlib.h>
 
 
-void bellFordMatrix(MatrixN * matrix, int startNode);
+int ** bellFordMatrix(MatrixN * matrix, int startNode, int edgesNumber);
+int ** bellFordList(ListN * list, int startNode, int edgesNumber);

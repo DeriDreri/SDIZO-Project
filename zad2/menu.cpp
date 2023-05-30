@@ -1,8 +1,10 @@
 #include "menu.h"
 
-ListN * listN[20];
-MatrixN * matrix[20];
+ListN * listN[50];
+MatrixN * matrix[50];
 int startingNode;
+int nodesAmount;
+int edgesAmount;
 
 int main(){
     int choice;
@@ -128,12 +130,15 @@ void loadFile(bool isMst){
     inputFile.open(pathName); 
     string sValue;
 
-    std::getline(inputFile, sValue);
+    std::getline(inputFile, sValue);    
+    string edges = sValue.substr(0, sValue.find_first_of(' '));
+    edgesAmount = std::stoi(edges);
+
     string nodes= sValue.substr(sValue.find_first_of(' ') +1);
     if(!isMst){
         nodes = nodes.substr(0, nodes.find_last_of(' '));
     }
-
+    nodesAmount = std::stoi(nodes);
 
     if (matrix != nullptr && matrix[0] != nullptr){
         delete matrix[0];
@@ -144,13 +149,14 @@ void loadFile(bool isMst){
         listN[0] == nullptr;
     }
 
-    matrix[0] = new MatrixN(std::stoi(nodes));
-    listN[0] = new ListN(std::stoi(nodes));
+    matrix[0] = new MatrixN(nodesAmount);
+    listN[0] = new ListN(nodesAmount);
 
     if(!isMst){
         string startingNodeS = sValue.substr(sValue.find_last_of(' ') + 1);
         if (startingNodeS.find('\r') != std::string::npos)
-            startingNode = std::stoi(startingNodeS.substr(0, startingNodeS.length()-1));
+            startingNodeS = startingNodeS.substr(0, startingNodeS.length()-1);
+        startingNode = std::stoi(startingNodeS);
     }
 
     string start, end, value;
@@ -189,22 +195,159 @@ void loadFile(bool isMst){
 
 
 void primeAlgorithm(){
-    primeMatrix(matrix[0]);
-    primeList(listN[0]);
+    int ** results = primeMatrix(matrix[0], nodesAmount);
+   
+    int counter = 0;
+    printf("----- Macierzowo ------\n");
+    for(int i = 0; i < nodesAmount; i++){
+        if(results[1][i] == 0)
+            continue;
+        printf("(%d, %d) : %d\n", i, results[0][i], results[1][i]);
+        counter+=results[1][i];
+    }
+    printf("Koszt całkowity: %d\n", counter);
+    
+    free(results[0]);
+    results[0] = nullptr;
+    free(results[1]);
+    results[1] = nullptr;
+    free(results);
+    
+
+    results = primeList(listN[0], nodesAmount);
+    counter = 0;
+     printf("----- Listowo ------\n");
+    for(int i = 0; i < nodesAmount; i++){
+        if(results[1][i] == 0)
+            continue;
+        printf("(%d, %d) : %d\n", i, results[0][i], results[1][i]);
+        counter+=results[1][i];
+    }
+    printf("Koszt całkowity: %d\n", counter);
+    
+
+    free(results[0]);
+    results[0] = nullptr;
+    free(results[1]);
+    results[1] = nullptr;
+    free(results);
+    results = nullptr;
 }
 
 
 void kruskalAlgoritm(){
-    kruskalMatrix(matrix[0]);
-    kruskalList(listN[0]);
+    edge * finalEdgesList;
+    finalEdgesList = kruskalMatrix(matrix[0]);
+    int cost = 0;
+    std::cout << "------ Macierzowo -----" << std::endl;
+    for(int i = 0; i < nodesAmount-15; i++){
+        printf("(%d, %d) : %d\n", finalEdgesList[i].start, finalEdgesList[i].end, finalEdgesList[i].value);
+        cost += finalEdgesList[i].value;
+    }
+    std::cout << "Koszt całkowity: " << cost << std::endl;
+
+    free(finalEdgesList);
+
+    cost = 0;
+    finalEdgesList = kruskalList(listN[0]);
+    std::cout << "------ Listowo -----" << std::endl;
+    for(int i = 0; i < nodesAmount-1; i++){
+        printf("(%d, %d) : %d\n", finalEdgesList[i].start, finalEdgesList[i].end, finalEdgesList[i].value);
+        cost += finalEdgesList[i].value;
+    }
+    std::cout << "Koszt całkowity: " << cost << std::endl;
+    free(finalEdgesList);
+    finalEdgesList = nullptr;
 }
 
 void djikstraAlgorithm(){
-    djikstraMatrix(matrix[0], startingNode);
-    djikstraList(listN[0], startingNode);
+    // Algorytm tablicowy
+    int ** results = djikstraMatrix(matrix[0], startingNode);
+    // Wydruk
+    printf(" --- Tablicowo ---\n");
+    for (int i = 0; i < matrix[0] -> getDimension(); i++){
+        int currentNode = i;
+        printf("%d : Koszt: %d\n", currentNode, results[1][currentNode]);
+        printf("%d", currentNode);
+        while(currentNode != startingNode){
+            printf(" <- %d", results[0][currentNode]);
+            currentNode = results[0][currentNode];
+        }
+        printf("\n");
+    }
+
+    // Czyści pamięć
+    free(results[0]);
+    results[0] = nullptr;
+    free(results[1]);
+    results[1] = nullptr;
+    free(results);
+
+    // Algorytm listowy
+    results = djikstraList(listN[0], startingNode);
+    // Wydruk
+    printf("----- Listowo ------\n");
+    for (int i = 0; i < listN[0] -> getSize(); i++){
+        int currentNode = i;
+        printf("%d : Koszt: %d\n", currentNode, results[1][currentNode]);
+        printf("%d", currentNode);
+        while(currentNode != startingNode){
+            printf(" <- %d", results[0][currentNode]);
+            currentNode = results[0][currentNode];
+        }
+        printf("\n");
+    }
+
+    // Czyści pamieć
+    free(results[0]);
+    results[0] = nullptr;
+    free(results[1]);
+    results[1] = nullptr;
+    free(results);
+    results = nullptr;
 }
 
 
 void bellmanFordAlgoritm(){
-    bellFordMatrix(matrix[0], startingNode);
+    // Algorytm tablicowy
+    int ** results = djikstraMatrix(matrix[0], startingNode);
+    results = bellFordMatrix(matrix[0], startingNode, edgesAmount);
+    printf(" --- Tablicowo ---\n");
+    for (int i = 0; i < matrix[0] -> getDimension(); i++){
+        int currentNode = i;
+        printf("%d : Koszt: %d\n", currentNode, results[1][currentNode]);
+        printf("%d", currentNode);
+        while(currentNode != startingNode){
+            printf(" <- %d", results[0][currentNode]);
+            currentNode = results[0][currentNode];
+        }
+        printf("\n");
+    }
+
+    free(results[0]);
+    results[0] = nullptr;
+    free(results[1]);
+    results[1] = nullptr;
+    free(results);
+
+    // Algorytm lista
+    results = bellFordList(listN[0], startingNode, edgesAmount);
+    printf("----- Listowo ------\n");
+    for (int i = 0; i < listN[0] -> getSize(); i++){
+        int currentNode = i;
+        printf("%d : Koszt: %d\n", currentNode, results[1][currentNode]);
+        printf("%d", currentNode);
+        while(currentNode != startingNode){
+            printf(" <- %d", results[0][currentNode]);
+            currentNode = results[0][currentNode];
+        }
+        printf("\n");
+    }
+
+    free(results[0]);
+    results[0] = nullptr;
+    free(results[1]);
+    results[1] = nullptr;
+    free(results);
+    results = nullptr;
 };

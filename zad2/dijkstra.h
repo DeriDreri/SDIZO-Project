@@ -5,6 +5,6 @@
 using namespace std;
 
 
-void djikstraMatrix(MatrixN * matrix, int startingNode);
-void djikstraList(ListN * list, int startingNode);
+int ** djikstraMatrix(MatrixN * matrix, int startingNode);
+int ** djikstraList(ListN * list, int startingNode);
 int extractMin2(List * list, int * key);

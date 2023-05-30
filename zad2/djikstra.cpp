@@ -1,6 +1,6 @@
 #include "dijkstra.h"
 
-void djikstraMatrix(MatrixN * matrix, int startingNode){
+int ** djikstraMatrix(MatrixN * matrix, int startingNode){
     int size = matrix -> getDimension();
     int * distance = (int *)malloc(size * sizeof(int));
     int * previous = (int *)malloc(size * sizeof(int));
@@ -26,30 +26,18 @@ void djikstraMatrix(MatrixN * matrix, int startingNode){
         attached = nullptr;
     }
 
-    printf(" --- Tablicowo ---\n");
-    for (int i = 0; i < size; i++){
-        int currentNode = i;
-        printf("%d : Koszt: %d\n", currentNode, distance[currentNode]);
-        printf("%d", currentNode);
-        while(currentNode != startingNode){
-            printf(" -> %d", previous[currentNode]);
-            currentNode = previous[currentNode];
-        }
-        printf("\n");
-    }
-
+    int ** toReturn = (int **)malloc(2 * sizeof(int *));
+    toReturn[0] = previous;
+    toReturn[1] = distance;
 
     free(quene);
     quene = nullptr;
-    free(distance);
-    distance = nullptr;
-    free(previous);
-    previous = nullptr;
+    return toReturn;
 }
 
 
 
-void djikstraList(ListN * list, int startingNode){
+int ** djikstraList(ListN * list, int startingNode){
     int size = list -> getSize();
     int * distance = (int *)malloc(size * sizeof(int));
     int * previous = (int *)malloc(size * sizeof(int));
@@ -75,25 +63,13 @@ void djikstraList(ListN * list, int startingNode){
         attached = nullptr;
     }
 
-    printf("----- Listowo ------\n");
-    for (int i = 0; i < size; i++){
-        int currentNode = i;
-        printf("%d : Koszt: %d\n", currentNode, distance[currentNode]);
-        printf("%d", currentNode);
-        while(currentNode != startingNode){
-            printf(" -> %d", previous[currentNode]);
-            currentNode = previous[currentNode];
-        }
-        printf("\n");
-    }
-
+    int ** toReturn = (int **)malloc(2 * sizeof(int *));
+    toReturn[0] = previous;
+    toReturn[1] = distance;
 
     free(quene);
     quene = nullptr;
-    free(distance);
-    distance = nullptr;
-    free(previous);
-    previous = nullptr;
+    return toReturn;
 }
 
 //Funckja oparta o listę

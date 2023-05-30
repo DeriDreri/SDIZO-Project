@@ -96,4 +96,29 @@ void ListN::addEdge(int start, int end, int value){
     }
 }
 
+int * ListN::getEdge(int edgeIndex){
+    ListElementN * currentN = neighbours[0];
+    ListElementN * currentW = weights[0];
+    int node = 0;
+    while(edgeIndex > 0){
+        if(currentN -> next == nullptr){
+            node++;
+            if(node == size)
+                return nullptr;
+            currentN = neighbours[node];
+            currentW = weights[node];
+        }
+        else{
+            currentN = currentN -> next;
+            currentW = currentW -> next;
+        }
+        edgeIndex--;
+    }
+    int * toReturn = (int *)malloc(3 * sizeof(int));
+    toReturn[0] = node;
+    toReturn[1] = currentN -> value;
+    toReturn[2] = currentW -> value;
+    return toReturn;
+}
+
 #endif
