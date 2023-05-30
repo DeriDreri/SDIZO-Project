@@ -5,7 +5,7 @@
 
 
 
-edge *  kruskalMatrix(MatrixN * matrix);
-edge *  kruskalList(ListN * list);
+edge *  kruskalMatrix(MatrixN * matrix, int size);
+edge *  kruskalList(ListN * list, int size);
 void treesUnion(int first, int second, int * trees, int size);
 void bubbleEdgesSort(edge * edgesList, int size);

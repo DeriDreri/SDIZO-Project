@@ -237,10 +237,10 @@ void primeAlgorithm(){
 
 void kruskalAlgoritm(){
     edge * finalEdgesList;
-    finalEdgesList = kruskalMatrix(matrix[0]);
+    finalEdgesList = kruskalMatrix(matrix[0], nodesAmount);
     int cost = 0;
     std::cout << "------ Macierzowo -----" << std::endl;
-    for(int i = 0; i < nodesAmount-15; i++){
+    for(int i = 0; i < nodesAmount-1; i++){
         printf("(%d, %d) : %d\n", finalEdgesList[i].start, finalEdgesList[i].end, finalEdgesList[i].value);
         cost += finalEdgesList[i].value;
     }
@@ -249,7 +249,7 @@ void kruskalAlgoritm(){
     free(finalEdgesList);
 
     cost = 0;
-    finalEdgesList = kruskalList(listN[0]);
+    finalEdgesList = kruskalList(listN[0], nodesAmount);
     std::cout << "------ Listowo -----" << std::endl;
     for(int i = 0; i < nodesAmount-1; i++){
         printf("(%d, %d) : %d\n", finalEdgesList[i].start, finalEdgesList[i].end, finalEdgesList[i].value);

@@ -23,5 +23,7 @@ public:
     void fixHeapUp(int index);
     void fixHeap(int index);
     void floydHeap();
+    void displayTree();
+    void printNode(int depth, int parentIndex);
 };
 #endif

@@ -5,18 +5,14 @@ int ** primeMatrix(MatrixN * matrix, int nodesNumber){
     int * previous = (int *)malloc(nodesNumber * sizeof(int));
     HeapN query = HeapN(nodesNumber);
     int startNode = 0;
-    for (int i = 0; i < nodesNumber; i++){
-        if(i == startNode){
-            key[i] = 0;
-            previous[i] = startNode;
-        }
-        else{
-            key[i] = INT_MAX-1;
-            previous[i] = -1;
-        }
-        query.addElement(key[i], i);
+    for (int i = 0; i < nodesNumber; i++){ 
+        key[i] = INT_MAX-1;
+        previous[i] = -1;
+        query.addElement(i, key[i]);
     }
-    query.floydHeap();
+    key[startNode] = 0;
+    previous[startNode] = startNode;
+    query.modifyValueOf(startNode, 0);
     
     previous[startNode] = startNode;
 
@@ -24,14 +20,14 @@ int ** primeMatrix(MatrixN * matrix, int nodesNumber){
     while(!(query.isEmpty())){
         int * selected = query.removeRoot();
         int selectedNode = selected[1];
-        printf("Selected: %d, %d\n", selected[0], selected[1]);
         int * adjusted = matrix -> getAdjusted(selectedNode);
         for (int i = 0; i <= adjusted[0]; i++){
             int adjustedNode = adjusted[i +1];
-            if(query.findElementOfNode(adjustedNode) != -1 && matrix->getEdgeWage(selectedNode, adjustedNode) < key[adjustedNode]){
-                key[adjustedNode] = matrix -> getEdgeWage(selectedNode, adjustedNode);
+            int value = matrix->getEdgeWage(selectedNode, adjustedNode);
+            if(query.findElementOfNode(adjustedNode) != -1 && value < key[adjustedNode]){
+                key[adjustedNode] = value;
                 previous[adjustedNode] = selectedNode;
-                query.modifyValueOf(adjustedNode, matrix -> getEdgeWage(selectedNode, adjustedNode));
+                query.modifyValueOf(adjustedNode, value);
             }
         }
         free(adjusted);
@@ -74,6 +70,7 @@ int ** primeList(ListN * list, int nodesNumber){
     }
 
 
+    
     int ** toReturn = (int **)malloc(2 * sizeof(int *));
     toReturn[0] = previous;
     toReturn[1] = key;

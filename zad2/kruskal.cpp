@@ -2,8 +2,7 @@
 
 
 
-edge * kruskalMatrix(MatrixN * matrix){
-    int size = matrix -> getDimension();
+edge * kruskalMatrix(MatrixN * matrix, int size){
     int * subTrees = (int *)malloc(size * sizeof(int));
     for(int i = 0; i < size; i++){
         subTrees[i] = i;
@@ -41,7 +40,6 @@ edge * kruskalMatrix(MatrixN * matrix){
         counter++;
     }
 
-
     free(subTrees);
     subTrees = nullptr;
 
@@ -49,8 +47,7 @@ edge * kruskalMatrix(MatrixN * matrix){
 }
 
 
-edge * kruskalList(ListN * list){
-    int size = list -> getSize();
+edge * kruskalList(ListN * list, int size){
     int * subTrees = (int *)malloc(size * sizeof(int));
     for(int i = 0; i < size; i++){
         subTrees[i] = i;

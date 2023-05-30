@@ -51,26 +51,29 @@ int HeapN::findElementOfValue(int value, int index){
     if(heapArray[index][0] > value)
         return -1;
     int toReturn = findElementOfValue(value, indexOfLeft(index));
-    if(toReturn != 1)
+    if(toReturn != -1)
         return toReturn;
     toReturn = findElementOfValue(value, indexOfRight(index));
     return toReturn;
 }
 
 int HeapN::findElementOfNode(int node, int index){
+    int toReturn = -1;
     if(index >= heapSize)
-        return -1;
-    if(heapArray[index][1] == node)
+        return toReturn;
+    int curNode = heapArray[index][1];
+    if(curNode == node)
         return index;
-    int toReturn = findElementOfNode(node, indexOfLeft(index));
-    if(toReturn != 1)
+    toReturn = findElementOfNode(node, indexOfLeft(index));
+    if(toReturn != -1)
         return toReturn;
     toReturn = findElementOfNode(node, indexOfRight(index));
     return toReturn;
 }
 
 void HeapN::modifyValueOf(int node, int newKey){
-  int index = findElementOfNode(node);
+  int index = findElementOfNode(node, 0);
+  if(index == -1) return;
   heapArray[index][0] = newKey;
   fixHeap(index);  
 }
@@ -79,7 +82,7 @@ int * HeapN::removeRoot(){
     int * toReturn = (int *)malloc(2 * sizeof(int));
     heapSize--;
     toReturn[0] = heapArray[0][0];
-    toReturn[1] = heapArray[1][0];
+    toReturn[1] = heapArray[0][1];
 
     heapArray[0][0] = heapArray[heapSize][0];
     heapArray[0][1] = heapArray[heapSize][1];
@@ -170,5 +173,34 @@ void HeapN::floydHeap(){
     for (int i = (heapSize - 2)/2; i >= 0; i--){
         fixHeapDown(i);
     }
+}
+
+void HeapN::printNode(int depth, int parentIndex){
+    
+    for(int i = 0; i < depth; i++){
+        if(i == depth -1 ) 
+            if(parentIndex % 2 == 1)                //Dla lewego potomka
+                std::cout << "├── ";
+            else 
+                std::cout << "└── ";                //Dla prawego potomka
+        else
+            std::cout << "│   ";
+    }
+    std::cout << heapArray[parentIndex][1] << ":" << heapArray[parentIndex][0] <<std::endl;
+    int leftIndex = 2 * parentIndex + 1;
+    if(leftIndex >= heapSize) 
+        return;
+    printNode(depth+1, leftIndex);
+    int rightIndex = 2 * parentIndex + 2;
+    if(rightIndex >= heapSize) 
+        return;
+    printNode(depth+1, rightIndex);
+    
+}
+
+void HeapN::displayTree(){
+    if(heapSize > 0)
+        printNode(0, 0);
+    std::cout << std::endl;
 }
 #endif
