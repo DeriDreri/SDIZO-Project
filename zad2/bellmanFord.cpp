@@ -12,7 +12,7 @@ int ** bellFordMatrix(MatrixN * matrix, int startNode, int edgesNumber){
     
 
     edge * edgesList = (edge *)malloc(edgesNumber * sizeof(edge));
-    int counter = 0;
+    int counter = 0;                                            // Bezpośrrednio krawędzie z macierzy
     for(int i = 0; i < size; i++){
         for (int j = 0; j < size; j++){
             int value = matrix -> get(i,j);
@@ -22,7 +22,7 @@ int ** bellFordMatrix(MatrixN * matrix, int startNode, int edgesNumber){
             }
         }
     }
-
+    //SPRAWDZANIE CYKLU UJEMNEGO
     
     for(int i = 1; i < size; i++){
         bool change = false;

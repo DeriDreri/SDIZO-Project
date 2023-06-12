@@ -16,10 +16,12 @@ int ** djikstraMatrix(MatrixN * matrix, int startingNode){
     while(!quene.isEmpty()){
         int * selected = quene.removeRoot();
         int selectedNode = selected[1];
-        int * attached = matrix -> getAdjusted(selectedNode);
-        for(int i = 1; i <= attached[0]; i++){
-            int checkedNode = attached[i];
-            int value = distance[selectedNode] + matrix -> getEdgeWage(selectedNode, checkedNode);
+        //int * attached = matrix -> getAdjusted(selectedNode);   // Wprost w algorytmie
+        for(int checkedNode = 0; checkedNode < size; checkedNode++){
+            int checkedNodeWeight = matrix -> getEdgeWage(selectedNode, checkedNode);
+            if(checkedNodeWeight == 0)
+                continue;
+            int value = distance[selectedNode] + checkedNodeWeight;
             if (distance[checkedNode] > value){
                 distance[checkedNode] = value;
                 previous[checkedNode] = selectedNode;
@@ -28,8 +30,6 @@ int ** djikstraMatrix(MatrixN * matrix, int startingNode){
         }
         free(selected);
         selected = nullptr;
-        free(attached);
-        attached = nullptr;
     }
 
     int ** toReturn = (int **)malloc(2 * sizeof(int *));
@@ -57,20 +57,25 @@ int ** djikstraList(ListN * list, int startingNode){
     while(!quene.isEmpty()){
         int * selected = quene.removeRoot();
         int selectedNode = selected[1];
-        int * attached = list -> getAdjusted(selectedNode);
-        for(int i = 1; i <= attached[0]; i++){
-            int checkedNode = attached[i];
+        //int * attached = list -> getAdjusted(selectedNode); // Wprost w algorytmie
+        ListElementN * attached = list -> getList(selectedNode); 
+        if(attached == nullptr)
+            break;
+        while(attached != nullptr){
+            int checkedNode = attached -> value;
             int value = distance[selectedNode] + list -> getEdgeWage(selectedNode, checkedNode);
             if (distance[checkedNode] > value){
                 distance[checkedNode] = value;
                 previous[checkedNode] = selectedNode;
                 quene.modifyValueOf(checkedNode, value);
             }
+            if(attached -> next == nullptr)
+                break;
+            attached = attached -> next;
         }
+        
         free(selected);
         selected = nullptr;
-        free(attached);
-        attached = nullptr;
     }
 
     int ** toReturn = (int **)malloc(2 * sizeof(int *));

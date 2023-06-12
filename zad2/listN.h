@@ -28,6 +28,7 @@ class ListN{
         int * getAdjusted(int node);
         int getEdgeWage(int start, int end);
         int * getEdge(int edgeIndex);
+        ListElementN * getList(int node);
 };
 
 

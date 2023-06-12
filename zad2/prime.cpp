@@ -20,9 +20,10 @@ int ** primeMatrix(MatrixN * matrix, int nodesNumber){
     while(!(query.isEmpty())){
         int * selected = query.removeRoot();
         int selectedNode = selected[1];
-        int * adjusted = matrix -> getAdjusted(selectedNode);
-        for (int i = 0; i <= adjusted[0]; i++){
-            int adjustedNode = adjusted[i +1];
+        for(int adjustedNode = 0; adjustedNode < nodesNumber; adjustedNode++){
+            int checkedNodeWeight = matrix -> getEdgeWage(selectedNode, adjustedNode);
+            if(checkedNodeWeight == 0)
+                continue;
             int value = matrix->getEdgeWage(selectedNode, adjustedNode);
             if(query.findElementOfNode(adjustedNode) != -1 && value < key[adjustedNode]){
                 key[adjustedNode] = value;
@@ -30,8 +31,6 @@ int ** primeMatrix(MatrixN * matrix, int nodesNumber){
                 query.modifyValueOf(adjustedNode, value);
             }
         }
-        free(adjusted);
-        adjusted = nullptr;
         free(selected);
         selected = nullptr;
     }
@@ -59,13 +58,16 @@ int ** primeList(ListN * list, int nodesNumber){
 
     while(!(query -> isEmpty())){
         int selectedNode = extractMin(query, key);
-        int * adjusted = list -> getAdjusted(selectedNode);
-        for (int i = 0; i <= adjusted[0]; i++){
-            int adjustedNode = adjusted[i +1];
+        ListElementN * attached = list -> getList(selectedNode); 
+        while (attached != nullptr){
+            int adjustedNode = attached -> value;
             if(query->findElementOfValue(adjustedNode) && list ->getEdgeWage(selectedNode, adjustedNode) < key[adjustedNode]){
                 key[adjustedNode] = list -> getEdgeWage(selectedNode, adjustedNode);
                 previous[adjustedNode] = selectedNode;
             }
+            if(attached -> next == nullptr)
+                break;
+            attached = attached -> next;
         }
     }
 

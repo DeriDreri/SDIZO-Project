@@ -48,6 +48,13 @@ void ListN::print(){
     }
 }       
 
+ListElementN * ListN::getList(int node){
+    if (node >= size || node < 0)
+        throw "Out of the bonds!";
+    return neighbours[node];
+}
+
+
 int * ListN::getAdjusted(int node){
     if(neighbours[node] == nullptr) 
         return 0;
