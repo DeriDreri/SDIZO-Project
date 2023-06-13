@@ -54,6 +54,12 @@ ListElementN * ListN::getList(int node){
     return neighbours[node];
 }
 
+ListElementN * ListN::getListWeight(int node){
+    if (node >= size || node < 0)
+        throw "Out of the bonds!";
+    return weights[node];
+}
+
 
 int * ListN::getAdjusted(int node){
     if(neighbours[node] == nullptr) 

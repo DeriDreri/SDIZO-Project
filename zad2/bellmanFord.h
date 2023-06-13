@@ -5,5 +5,5 @@
 #include <stdlib.h>
 
 
-int ** bellFordMatrix(MatrixN * matrix, int startNode, int edgesNumber);
+int ** bellFordMatrix(MatrixN * matrix, int startNode);
 int ** bellFordList(ListN * list, int startNode, int edgesNumber);

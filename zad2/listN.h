@@ -29,6 +29,7 @@ class ListN{
         int getEdgeWage(int start, int end);
         int * getEdge(int edgeIndex);
         ListElementN * getList(int node);
+        ListElementN * getListWeight(int node);
 };
 
 

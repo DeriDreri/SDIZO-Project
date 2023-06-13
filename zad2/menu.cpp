@@ -330,7 +330,7 @@ void djikstraAlgorithm(){
 void bellmanFordAlgoritm(){
     // Algorytm tablicowy
     int ** results = djikstraMatrix(matrix[0], startingNode);
-    results = bellFordMatrix(matrix[0], startingNode, edgesAmount);
+    results = bellFordMatrix(matrix[0], startingNode);
     printf(" --- Tablicowo ---\n");
     for (int i = 0; i < matrix[0] -> getDimension(); i++){
         int currentNode = i;
@@ -589,7 +589,7 @@ void bellFordMatrixData(){
         auto start = std::chrono::high_resolution_clock::now();
         int edgeNumber = (i * (i - 1) * density) / 100; 
         for(int j = 0; j < 50; j++){
-            bellFordMatrix(matrix[j], i, edgeNumber);
+            bellFordMatrix(matrix[j], i);
         }
         auto end = std::chrono::high_resolution_clock::now();
         auto time20 = (end - start) / 50;
@@ -599,7 +599,7 @@ void bellFordMatrixData(){
         fillArray(i, density, false, true);
         start = std::chrono::high_resolution_clock::now();
         for(int j = 0; j < 50; j++){
-            bellFordMatrix(matrix[j], i, edgeNumber);
+            bellFordMatrix(matrix[j], i);
         }
         end = std::chrono::high_resolution_clock::now();
         auto time60 = (end - start) / 50;
@@ -609,7 +609,7 @@ void bellFordMatrixData(){
         fillArray(i, density, false, true);
         start = std::chrono::high_resolution_clock::now();
         for(int j = 0; j < 50; j++){
-            bellFordMatrix(matrix[j], i, edgeNumber);
+            bellFordMatrix(matrix[j], i);
         }
         end = std::chrono::high_resolution_clock::now();
         auto time99 = (end - start) / 50;   
