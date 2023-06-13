@@ -55,7 +55,7 @@ edge * kruskalList(ListN * list, int size){
 
     int edgesNumber = 0;
     for(int i = 0; i < size; i++){
-        edgesNumber += list -> getAdjusted(i)[0];
+        edgesNumber += list -> getAdjusted(i)[0];   // NAPRAWA!
     }
     edge * edgesList = (edge *)malloc(edgesNumber * sizeof(edge));
     int counter = 0;

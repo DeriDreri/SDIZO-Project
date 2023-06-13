@@ -1,10 +1,13 @@
 #include "menu.h"
+#define MEASURMENT_START 50
+#define MEASURMENT_STEP 10
 
 ListN * listN[50];
 MatrixN * matrix[50];
 int startingNode;
 int nodesAmount;
 int edgesAmount;
+
 
 int main(){
     int choice;
@@ -39,15 +42,16 @@ void printSubMenu(string nameOfStructure){
     std::cout << "----------" << nameOfStructure << "----------\n"
     << "1. Wczytaj strukturę\n"
     << "2. Wygeneruj losowo\n"
-    << "3. Wyświetl strukturę\n";
+    << "3. Wyświetl strukturę\n"
+    << "4. Pomiary\n";
 }
 
 void mstOperations(){
     short choice = -1;
     while(choice != 0){
         printSubMenu("Minimalne drzewo rozpinające");
-        std::cout << "4. Algorytm Prima\n"
-        << "5. Alogrytm Kruskala\n"
+        std::cout << "5. Algorytm Prima\n"
+        << "6. Alogrytm Kruskala\n"
         << "0. Wyjście\n"
         << "Wybór: ";
         std::cin >> choice;
@@ -69,11 +73,18 @@ void mstOperations(){
             break;
 
             case 4:
+            mstData();
+            break;
+            
+            case 5:
             primeAlgorithm();
             break;
 
-            case 5:
+            case 6:
             kruskalAlgoritm();
+            break;
+
+            default:
             break;
         }
     }
@@ -84,8 +95,8 @@ void shortestPathOperations(){
  short choice = -1;
     while(choice != 0){
         printSubMenu("Najkrótsza droga");
-        std::cout << "4. Algorytm Djikstry\n"
-        << "5. Alogrytm Bellmana-Forda\n"
+        std::cout << "5. Algorytm Djikstry\n"
+        << "6. Alogrytm Bellmana-Forda\n"
         << "0. Wyjście\n"
         << "Wybór: ";
         std::cin >> choice;
@@ -106,12 +117,20 @@ void shortestPathOperations(){
                 std::cout << "Brak listy sąsiadów\n";
             break;
 
+
             case 4:
+            shortPathData();
+            break; 
+
+            case 5:
             djikstraAlgorithm();
             break;
 
-            case 5:
+            case 6:
             bellmanFordAlgoritm();
+            break;
+
+            default:
             break;
         }
     }
@@ -351,3 +370,357 @@ void bellmanFordAlgoritm(){
     free(results);
     results = nullptr;
 };
+
+void primeMatrixData(){
+    for(int i = MEASURMENT_START; i < MEASURMENT_START + 7 * MEASURMENT_STEP; i += MEASURMENT_STEP){
+        
+        int density = 20;
+        fillArray(i, density, true, false);
+        auto start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            primeMatrix(matrix[j], i);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto time20 = (end - start) / 50;
+        
+        density = 60;
+        fillArray(i, density, true, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            primeMatrix(matrix[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time60 = (end - start) / 50;
+    
+        density = 99;
+        fillArray(i, density, true, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            primeMatrix(matrix[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time99 = (end - start) / 50;   
+
+        printf("Dla %d wierzchołków: %d - %d - %d\n", i, time20, time60, time99);
+        //std::chrono::high_resolution_clock::now();
+    }
+}
+
+void primeListData(){
+    for(int i = MEASURMENT_START; i < MEASURMENT_START + 7 * MEASURMENT_STEP; i += MEASURMENT_STEP){
+        
+        int density = 20;
+        fillList(i, density, true, false);
+        auto start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            primeList(listN[j], i);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto time20 = (end - start) / 50;
+        
+        density = 60;
+        fillList(i, density, true, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            primeList(listN[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time60 = (end - start) / 50;
+    
+        density = 99;
+        fillList(i, density, true, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            primeList(listN[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time99 = (end - start) / 50;   
+
+        printf("Dla %d wierzchołków: %d - %d - %d\n", i, time20, time60, time99);
+        //std::chrono::high_resolution_clock::now();
+    }
+}
+
+void kruskalMatrixData(){
+    for(int i = MEASURMENT_START; i < MEASURMENT_START + 7 * MEASURMENT_STEP; i += MEASURMENT_STEP){
+        
+        int density = 20;
+        fillArray(i, density, true, false);
+        auto start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            kruskalMatrix(matrix[j], i);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto time20 = (end - start) / 50;
+        
+        density = 60;
+        fillArray(i, density, true, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            kruskalMatrix(matrix[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time60 = (end - start) / 50;
+    
+        density = 99;
+        fillArray(i, density, true, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            kruskalMatrix(matrix[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time99 = (end - start) / 50;   
+
+        printf("Dla %d wierzchołków: %d - %d - %d\n", i, time20, time60, time99);
+        //std::chrono::high_resolution_clock::now();
+    }
+}
+
+void kruskalListData(){
+    for(int i = MEASURMENT_START; i < MEASURMENT_START + 7 * MEASURMENT_STEP; i += MEASURMENT_STEP){
+        
+        int density = 20;
+        fillList(i, density, true, false);
+        auto start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            kruskalList(listN[j], i);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto time20 = (end - start) / 50;
+        
+        density = 60;
+        fillList(i, density, true, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            kruskalList(listN[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time60 = (end - start) / 50;
+    
+        density = 99;
+        fillList(i, density, true, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            kruskalList(listN[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time99 = (end - start) / 50;   
+
+        printf("Dla %d wierzchołków: %d - %d - %d\n", i, time20, time60, time99);
+        //std::chrono::high_resolution_clock::now();
+    }
+}
+
+void djikstraMatrixData(){
+    for(int i = MEASURMENT_START; i < MEASURMENT_START + 7 * MEASURMENT_STEP; i += MEASURMENT_STEP){
+        
+        int density = 20;
+        fillArray(i, density, false, false);
+        auto start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            kruskalMatrix(matrix[j], i);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto time20 = (end - start) / 50;
+        
+        density = 60;
+        fillArray(i, density, false, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            kruskalMatrix(matrix[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time60 = (end - start) / 50;
+    
+        density = 99;
+        fillArray(i, density, false, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            kruskalMatrix(matrix[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time99 = (end - start) / 50;   
+
+        printf("Dla %d wierzchołków: %d - %d - %d\n", i, time20, time60, time99);
+        //std::chrono::high_resolution_clock::now();
+    }
+}
+
+void djikstraListData(){
+    for(int i = MEASURMENT_START; i < MEASURMENT_START + 7 * MEASURMENT_STEP; i += MEASURMENT_STEP){
+        
+        int density = 20;
+        fillList(i, density, false, false);
+        auto start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            djikstraList(listN[j], i);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto time20 = (end - start) / 50;
+        
+        density = 60;
+        fillList(i, density, false, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            djikstraList(listN[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time60 = (end - start) / 50;
+    
+        density = 99;
+        fillList(i, density, false, false);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            djikstraList(listN[j], i);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time99 = (end - start) / 50;   
+
+        printf("Dla %d wierzchołków: %d - %d - %d\n", i, time20, time60, time99);
+        //std::chrono::high_resolution_clock::now();
+    }
+}
+
+void bellFordMatrixData(){
+    for(int i = MEASURMENT_START; i < MEASURMENT_START + 7 * MEASURMENT_STEP; i += MEASURMENT_STEP){
+        
+        int density = 20;
+        fillArray(i, density, false, true);
+        auto start = std::chrono::high_resolution_clock::now();
+        int edgeNumber = (i * (i - 1) * density) / 100; 
+        for(int j = 0; j < 50; j++){
+            bellFordMatrix(matrix[j], i, edgeNumber);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto time20 = (end - start) / 50;
+        
+        density = 60;
+        edgeNumber = (i * (i - 1) * density) / 100; 
+        fillArray(i, density, false, true);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            bellFordMatrix(matrix[j], i, edgeNumber);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time60 = (end - start) / 50;
+    
+        density = 99;
+        edgeNumber = (i * (i - 1) * density) / 100; 
+        fillArray(i, density, false, true);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            bellFordMatrix(matrix[j], i, edgeNumber);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time99 = (end - start) / 50;   
+
+        printf("Dla %d wierzchołków: %d - %d - %d\n", i, time20, time60, time99);
+        //std::chrono::high_resolution_clock::now();
+    }
+}
+
+void bellFordListData(){
+    for(int i = MEASURMENT_START; i < MEASURMENT_START + 7 * MEASURMENT_STEP; i += MEASURMENT_STEP){
+        
+        int density = 20;
+        int edgeNumber = (i * (i - 1) * density) / 100; 
+        edgeNumber++;
+        fillList(i, density, true, true);
+        auto start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            bellFordList(listN[j], i, edgeNumber);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto time20 = (end - start) / 50;
+        
+        density = 60;
+        edgeNumber = (i * (i - 1) * density) / 100;
+        edgeNumber++; 
+        fillList(i, density, true, true);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            bellFordList(listN[j], i, edgeNumber);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time60 = (end - start) / 50;
+    
+        density = 99;
+        edgeNumber = (i * (i - 1) * density) / 100; 
+        edgeNumber++;
+        fillList(i, density, false, true);
+        start = std::chrono::high_resolution_clock::now();
+        for(int j = 0; j < 50; j++){
+            bellFordList(listN[j], i, edgeNumber);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto time99 = (end - start) / 50;   
+
+        printf("Dla %d wierzchołków: %d - %d - %d\n", i, time20, time60, time99);
+        //std::chrono::high_resolution_clock::now();
+    }
+}
+
+
+void mstData(){
+
+    printf("-- Algorytm Kruskala - Macierzowo --\n");
+    kruskalMatrixData();  
+    printf("-- Algorytm Kruskala - Listowo --\n");
+    kruskalListData();
+
+    printf("-- Algorytm Prima - Listowo --\n");
+    primeListData();
+    printf("-- Algorytm Prima - Macierzowo --\n");
+    primeMatrixData();
+    
+};
+void shortPathData(){
+    printf("-- Algorytm Bellmana-Forda - Listowo --\n");    
+    bellFordListData();
+    printf("-- Algorytm Bellmana-Forda - Macierzowo --\n");
+    bellFordMatrixData();
+    
+
+    printf("-- Algorytm Djikstry - Macierzowo --\n");
+    djikstraMatrixData();
+    printf("-- Algorytm Djikstry - Listowo --\n");
+    djikstraListData();
+
+    
+}
+
+void clearArrays(){
+    for (int i = 0; i < 50; i++){
+        if (matrix[i] != nullptr){
+            free(matrix[i]);
+            matrix[i] = nullptr;
+        }
+        if(listN[i] != nullptr){
+            free(listN[i]);
+            listN[i] = nullptr;
+        }
+    }
+}
+
+void fillArray(int nodesNumber, int density, bool twoWays, bool negativeValues){
+    for (int i = 0; i < 50; i++){
+        if (matrix[i] != nullptr){
+            free(matrix[i]);
+            matrix[i] = nullptr;
+        }
+    }
+    for (int i = 0; i < 50; i++)
+        matrix[i] = generateMatrix(nodesNumber, density, twoWays, negativeValues);
+}
+
+void fillList(int nodesNumber, int density, bool twoWays, bool negativeValues){
+    for (int i = 0; i < 50; i++){   
+        if(listN[i] != nullptr){
+            free(listN[i]);
+            listN[i] = nullptr;
+        }
+    }
+    for (int i = 0; i < 50; i++){
+        listN[i] = generateList(nodesNumber, twoWays, negativeValues);
+    }
+}
