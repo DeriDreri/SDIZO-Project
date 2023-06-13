@@ -350,7 +350,7 @@ void bellmanFordAlgoritm(){
     free(results);
 
     // Algorytm lista
-    results = bellFordList(listN[0], startingNode, edgesAmount);
+    results = bellFordList(listN[0], startingNode);
     printf("----- Listowo ------\n");
     for (int i = 0; i < listN[0] -> getSize(); i++){
         int currentNode = i;
@@ -587,7 +587,6 @@ void bellFordMatrixData(){
         int density = 20;
         fillArray(i, density, false, true);
         auto start = std::chrono::high_resolution_clock::now();
-        int edgeNumber = (i * (i - 1) * density) / 100; 
         for(int j = 0; j < 50; j++){
             bellFordMatrix(matrix[j], i);
         }
@@ -595,7 +594,6 @@ void bellFordMatrixData(){
         auto time20 = (end - start) / 50;
         
         density = 60;
-        edgeNumber = (i * (i - 1) * density) / 100; 
         fillArray(i, density, false, true);
         start = std::chrono::high_resolution_clock::now();
         for(int j = 0; j < 50; j++){
@@ -605,7 +603,6 @@ void bellFordMatrixData(){
         auto time60 = (end - start) / 50;
     
         density = 99;
-        edgeNumber = (i * (i - 1) * density) / 100; 
         fillArray(i, density, false, true);
         start = std::chrono::high_resolution_clock::now();
         for(int j = 0; j < 50; j++){
@@ -623,34 +620,31 @@ void bellFordListData(){
     for(int i = MEASURMENT_START; i < MEASURMENT_START + 7 * MEASURMENT_STEP; i += MEASURMENT_STEP){
         
         int density = 20;
-        int edgeNumber = (i * (i - 1) * density) / 100; 
-        edgeNumber++;
+
         fillList(i, density, true, true);
         auto start = std::chrono::high_resolution_clock::now();
         for(int j = 0; j < 50; j++){
-            bellFordList(listN[j], i, edgeNumber);
+            bellFordList(listN[j], i);
         }
         auto end = std::chrono::high_resolution_clock::now();
         auto time20 = (end - start) / 50;
         
         density = 60;
-        edgeNumber = (i * (i - 1) * density) / 100;
-        edgeNumber++; 
+
         fillList(i, density, true, true);
         start = std::chrono::high_resolution_clock::now();
         for(int j = 0; j < 50; j++){
-            bellFordList(listN[j], i, edgeNumber);
+            bellFordList(listN[j], i);
         }
         end = std::chrono::high_resolution_clock::now();
         auto time60 = (end - start) / 50;
     
         density = 99;
-        edgeNumber = (i * (i - 1) * density) / 100; 
-        edgeNumber++;
+
         fillList(i, density, false, true);
         start = std::chrono::high_resolution_clock::now();
         for(int j = 0; j < 50; j++){
-            bellFordList(listN[j], i, edgeNumber);
+            bellFordList(listN[j], i);
         }
         end = std::chrono::high_resolution_clock::now();
         auto time99 = (end - start) / 50;   
@@ -663,10 +657,11 @@ void bellFordListData(){
 
 void mstData(){
 
-    printf("-- Algorytm Kruskala - Macierzowo --\n");
-    kruskalMatrixData();  
     printf("-- Algorytm Kruskala - Listowo --\n");
     kruskalListData();
+    printf("-- Algorytm Kruskala - Macierzowo --\n");
+    kruskalMatrixData();  
+   
 
     printf("-- Algorytm Prima - Listowo --\n");
     primeListData();
@@ -675,17 +670,19 @@ void mstData(){
     
 };
 void shortPathData(){
+    printf("-- Algorytm Djikstry - Listowo --\n");
+    djikstraListData();
+
+    printf("-- Algorytm Djikstry - Macierzowo --\n");
+    djikstraMatrixData();
+
     printf("-- Algorytm Bellmana-Forda - Listowo --\n");    
     bellFordListData();
     printf("-- Algorytm Bellmana-Forda - Macierzowo --\n");
     bellFordMatrixData();
     
-
-    printf("-- Algorytm Djikstry - Macierzowo --\n");
-    djikstraMatrixData();
-    printf("-- Algorytm Djikstry - Listowo --\n");
-    djikstraListData();
-
+   
+    
     
 }
 

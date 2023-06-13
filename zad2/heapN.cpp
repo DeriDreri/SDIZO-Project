@@ -11,12 +11,16 @@ HeapN::HeapN(int limit){
 }
 
 HeapN::~HeapN(){
-    for(int i = 0; i < heapLimit; i++){
-        free(heapArray[i]);
-        heapArray[i] = nullptr;
+    if(heapArray != nullptr){
+        for(int i = 0; i < heapLimit; i++){
+            if(heapArray[i] != nullptr){
+                free(heapArray[i]);
+                heapArray[i] = nullptr;
+            }
+        }
+        free(heapArray);
+        heapArray = nullptr;
     }
-    free(heapArray);
-    heapArray = nullptr;
 }
 
 bool HeapN::isEmpty(){

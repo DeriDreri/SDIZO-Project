@@ -54,20 +54,60 @@ edge * kruskalList(ListN * list, int size){
     }
 
     int edgesNumber = 0;
-    for(int i = 0; i < size; i++){
-        edgesNumber += list -> getAdjusted(i)[0];   // NAPRAWA!
-    }
-    edge * edgesList = (edge *)malloc(edgesNumber * sizeof(edge));
-    int counter = 0;
 
-    for(int i = 0; i < size; i++){
-        int * adjusted = list -> getAdjusted(i);
-        for (int j = 1; j <= adjusted[0]; j++){
-            edgesList[counter] = {i, adjusted[j], list -> getEdgeWage(i, adjusted[j])};
-            counter++;
+    int start = 0;
+    ListElementN * edges = list -> getList(0);
+    while (start < size){
+        if(edges == nullptr){
+            start++;
+            if (start >= size)
+                break;
+            edges = list -> getList(start);
+            continue;
         }
+        edgesNumber++;
+        if(edges -> next == nullptr){
+            start++;
+            if (start >= size)
+                break;
+            edges = list -> getList(start);
+            continue;
+        }
+        edges = edges -> next;
     }
 
+    edge * edgesList = (edge *)malloc(edgesNumber * sizeof(edge));
+    start = 0;
+    int counter = 0;
+    edges = list -> getList(0);
+    ListElementN * weights = list -> getListWeight(0);
+    while (start < size){
+        if(edges == nullptr){
+            start++;
+            if (start >= size)
+                break;
+            edges = list -> getList(start);
+            weights = list -> getListWeight(start);
+            continue;
+        }
+        
+        edgesList[counter] = {start, edges -> value, weights -> value};
+        counter++;
+
+        if(edges -> next == nullptr){
+            start++;
+            if (start >= size)
+                break;
+            edges = list -> getList(start);
+            weights = list -> getListWeight(start);
+            continue;
+        }
+        edges = edges -> next;
+        weights = weights -> next;
+    }
+
+    edges = nullptr;
+    weights = nullptr;
     bubbleEdgesSort(edgesList, edgesNumber);
 
     edge * finalEdgesList = (edge *)malloc(edgesNumber * sizeof(edge));

@@ -16,7 +16,6 @@ int ** djikstraMatrix(MatrixN * matrix, int startingNode){
     while(!quene.isEmpty()){
         int * selected = quene.removeRoot();
         int selectedNode = selected[1];
-        //int * attached = matrix -> getAdjusted(selectedNode);   // Wprost w algorytmie
         for(int checkedNode = 0; checkedNode < size; checkedNode++){
             int checkedNodeWeight = matrix -> getEdgeWage(selectedNode, checkedNode);
             if(checkedNodeWeight == 0)
@@ -45,7 +44,7 @@ int ** djikstraList(ListN * list, int startingNode){
     int size = list -> getSize();
     int * distance = (int *)malloc(size * sizeof(int));
     int * previous = (int *)malloc(size * sizeof(int));
-     HeapN quene = HeapN(size);
+    HeapN quene = HeapN(size);
     for (int i = 0; i < size; i++){
         distance[i] = INT_MAX-1;
         previous[i] = -1;
@@ -57,7 +56,6 @@ int ** djikstraList(ListN * list, int startingNode){
     while(!quene.isEmpty()){
         int * selected = quene.removeRoot();
         int selectedNode = selected[1];
-        //int * attached = list -> getAdjusted(selectedNode); // Wprost w algorytmie
         ListElementN * attached = list -> getList(selectedNode); 
         if(attached == nullptr)
             break;
@@ -97,6 +95,5 @@ int extractMin2(List * list, int * key){
         }
     }
     list -> removeElementOfValue(minimalNode);
-    //list -> displayList();
     return minimalNode;
 }

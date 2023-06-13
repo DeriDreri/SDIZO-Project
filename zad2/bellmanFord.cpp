@@ -10,9 +10,7 @@ int ** bellFordMatrix(MatrixN * matrix, int startNode){
     } 
     distance[startNode] = 0;
     
-
-    
-    //SPRAWDZANIE CYKLU UJEMNEGO
+  
     
     for(int i = 1; i < size; i++){
         bool change = false;
@@ -33,6 +31,22 @@ int ** bellFordMatrix(MatrixN * matrix, int startNode){
         if(!change) break;
     }
 
+    bool change = false;
+    for (int start = 0; start < size; start++){
+        for (int end = 0; end < size; end++){
+            if (start == end)
+                continue;
+            int weight = matrix -> getEdgeWage(start, end);
+            if( weight == 0)
+                continue;
+            if(distance[end] > distance[start] + weight){
+                change = true;
+                distance[end] = distance[start] + weight;
+                previous[end] = start;
+            }
+        }
+    }
+    if(change) return nullptr;
 
     int ** toReturn = (int **)malloc(2 * sizeof(int *));
     toReturn[0] = previous;
@@ -40,7 +54,7 @@ int ** bellFordMatrix(MatrixN * matrix, int startNode){
     return toReturn;
 }
 
-int ** bellFordList(ListN * list, int startNode, int edgesNumber){
+int ** bellFordList(ListN * list, int startNode){
     int size = list -> getSize();
     int * distance = (int *)malloc(size * sizeof(int));
     int * previous = (int *)malloc(size * sizeof(int));
@@ -84,9 +98,44 @@ int ** bellFordList(ListN * list, int startNode, int edgesNumber){
             weights = weights -> next;
         }
     
-        if(!change) break;
+        if(!change) 
+            break;
     }
 
+    bool change = false;
+    int start = 0;
+    ListElementN * edge = list -> getList(0);
+    ListElementN * weights = list -> getListWeight(0);
+    while(start < size){
+        if(edge == nullptr){
+            start++;
+            if(start >= size)
+                break;
+            edge = list -> getList(start);
+            weights = list -> getListWeight(start);
+            continue;
+        }
+        int end = edge -> value;
+        int weight = weights -> value;
+        if(distance[end] > distance[start] + weight){
+            change = true;
+            distance[end] = distance[start] + weight;
+            previous[end] = start;
+        }
+        if(edge -> next == nullptr){
+            start++;
+            if(start >= size)
+                break;
+            edge = list -> getList(start);
+            weights = list -> getListWeight(start);
+            continue;
+        }
+        edge = edge -> next;
+        weights = weights -> next;
+    }
+
+    if(change) 
+        return nullptr;
 
   
     int ** toReturn = (int **)malloc(2 * sizeof(int *));
