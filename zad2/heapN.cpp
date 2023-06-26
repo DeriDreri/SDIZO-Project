@@ -179,32 +179,4 @@ void HeapN::floydHeap(){
     }
 }
 
-void HeapN::printNode(int depth, int parentIndex){
-    
-    for(int i = 0; i < depth; i++){
-        if(i == depth -1 ) 
-            if(parentIndex % 2 == 1)                //Dla lewego potomka
-                std::cout << "├── ";
-            else 
-                std::cout << "└── ";                //Dla prawego potomka
-        else
-            std::cout << "│   ";
-    }
-    std::cout << heapArray[parentIndex][1] << ":" << heapArray[parentIndex][0] <<std::endl;
-    int leftIndex = 2 * parentIndex + 1;
-    if(leftIndex >= heapSize) 
-        return;
-    printNode(depth+1, leftIndex);
-    int rightIndex = 2 * parentIndex + 2;
-    if(rightIndex >= heapSize) 
-        return;
-    printNode(depth+1, rightIndex);
-    
-}
-
-void HeapN::displayTree(){
-    if(heapSize > 0)
-        printNode(0, 0);
-    std::cout << std::endl;
-}
 #endif

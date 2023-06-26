@@ -72,8 +72,6 @@ int ** djikstraList(ListN * list, int startingNode){
             attached = attached -> next;
         }
         
-        free(selected);
-        selected = nullptr;
     }
 
     int ** toReturn = (int **)malloc(2 * sizeof(int *));
